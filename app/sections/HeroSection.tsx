@@ -160,7 +160,7 @@ function HeroContent() {
       {/* Subtitle — body text, constrained line length for readability */}
       <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-lg mx-auto leading-relaxed px-4 sm:px-6">
         Your home for worship, community &amp; spiritual growth in{' '}
-        <span className="text-accent font-semibold">South Florida, USA</span>.
+        <span className="text-accent font-semibold">Jacksonville, FL</span>.
         <br className="hidden sm:block" />
         Join us for Salah, Jumu&apos;ah &amp; community events.
       </p>

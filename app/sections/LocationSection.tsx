@@ -6,7 +6,7 @@ const contactItems = [
   {
     icon: '🏠',
     label: 'Address',
-    value: 'Al-Amir Islamic Center\nFlorida, USA\n(Full address to be confirmed)',
+    value: 'Al-Amir Islamic Center\n5045 Soutel Dr Unit 38\nJacksonville, FL 32208',
     highlight: false,
   },
   {
@@ -45,7 +45,7 @@ export default function LocationSection() {
       <SectionHeader
         icon="📍"
         title={<>Find <span className="text-accent">Us</span></>}
-        description="Al-Amir Islamic Center — Your masjid in South Florida, open daily for the entire community"
+        description="Al-Amir Islamic Center — Your masjid in Jacksonville, FL, open daily for the entire community"
       />
 
       {/*
@@ -74,7 +74,7 @@ export default function LocationSection() {
 
           {/* Google Maps CTA — consistent btn-base sizing */}
           <a
-            href="https://maps.google.com/?q=Al-Amir+Islamic+Center+Florida"
+            href="https://maps.google.com/?q=5045+Soutel+Dr+Unit+38,+Jacksonville,+FL+32208"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-base btn-secondary mt-4 sm:mt-5 w-full justify-center"

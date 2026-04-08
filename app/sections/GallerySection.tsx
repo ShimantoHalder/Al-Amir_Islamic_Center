@@ -5,9 +5,14 @@ import { SectionContainer, SectionHeader } from '@/app/components/ui';
 import { useScrollReveal } from '@/app/hooks';
 
 const images = [
-  { src: '/alamiric.jpeg',  alt: 'Al-Amir Islamic Center — Community Event',  caption: 'Community Gathering' },
+  { src: '/alamiric.jpeg',  alt: 'Al-Amir Islamic Center — Community Event',   caption: 'Community Gathering' },
   { src: '/alamiric1.jpeg', alt: 'Al-Amir Islamic Center — Masjid Interior',   caption: 'Inside the Masjid' },
   { src: '/alamiric2.jpeg', alt: 'Al-Amir Islamic Center — Prayer Hall',       caption: 'Prayer Hall' },
+  { src: '/alm3.jpeg',      alt: 'Al-Amir Islamic Center — Islamic Center',    caption: 'Al-Amir Center' },
+  { src: '/alm4.jpeg',      alt: 'Al-Amir Islamic Center — Masjid View',       caption: 'Masjid View' },
+  { src: '/alm5.jpeg',      alt: 'Al-Amir Islamic Center — Community Life',    caption: 'Community Life' },
+  { src: '/alm6.jpeg',      alt: 'Al-Amir Islamic Center — Friday Prayer',     caption: "Jumu'ah Prayer" },
+  { src: '/alm7.jpeg',      alt: 'Al-Amir Islamic Center — Center Exterior',   caption: 'Center Exterior' },
 ];
 
 export default function GallerySection() {
@@ -137,7 +142,7 @@ export default function GallerySection() {
       </div>
 
       {/* Thumbnail strip */}
-      <div className={`reveal reveal-delay-2 ${visible ? 'visible' : ''} grid grid-cols-3 gap-4 sm:gap-5 md:gap-6`}>
+      <div className={`reveal reveal-delay-2 ${visible ? 'visible' : ''} grid grid-cols-4 gap-3 sm:gap-4 md:gap-5`}>
         {images.map((img, i) => (
           <button
             key={i}

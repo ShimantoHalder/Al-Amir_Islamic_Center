@@ -33,19 +33,24 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Al-Amir Islamic Center | Florida, USA - Masjid, Prayer Times & Community',
+  icons: {
+    icon: '/site_logo.png',
+    apple: '/site_logo.png',
+    shortcut: '/site_logo.png',
+  },
+  title: 'Al-Amir Islamic Center | Jacksonville, FL - Masjid, Prayer Times & Community',
   description:
     "Al-Amir Islamic Center in Florida — Your home for worship, prayer times, Islamic education, community events, and spiritual growth. Join us for Salah, Jumu'ah, and community services.",
   keywords:
-    'Islamic Center, Masjid, Mosque, Florida, Prayer Times, Muslim community, Islam, Quran, Islamic education, South Florida',
+    'Islamic Center, Masjid, Mosque, Jacksonville, Florida, Prayer Times, Muslim community, Islam, Quran, Islamic education, Jacksonville FL',
   authors: [{ name: 'Al-Amir Islamic Center' }],
   creator: 'Al-Amir Islamic Center',
   publisher: 'Al-Amir Islamic Center',
   metadataBase: new URL('https://alamirislamiccenter.org'),
   alternates: { canonical: 'https://alamirislamiccenter.org' },
   openGraph: {
-    title: 'Al-Amir Islamic Center | Florida, USA',
-    description: 'Your home for worship, prayer times, community events, and spiritual growth in South Florida',
+    title: 'Al-Amir Islamic Center | Jacksonville, FL',
+    description: 'Your home for worship, prayer times, community events, and spiritual growth in Jacksonville, FL',
     type: 'website',
     locale: 'en_US',
     url: 'https://alamirislamiccenter.org',

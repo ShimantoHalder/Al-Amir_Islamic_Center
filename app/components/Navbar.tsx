@@ -56,12 +56,17 @@ export default function Navbar() {
 
         {/* Logo */}
         <a href="#home" className="flex items-center gap-3 group flex-shrink-0">
-          <span className="text-2xl sm:text-3xl crescent leading-none">☪</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/site_logo.png"
+            alt="Al-Amir Islamic Center"
+            className="h-10 sm:h-12 w-auto object-contain"
+          />
           <div className="hidden sm:block">
             <div className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight group-hover:text-accent transition-colors duration-300 tracking-wide">
               Al-Amir Islamic Center
             </div>
-            <div className="text-accent text-xs sm:text-sm tracking-widest opacity-80">Florida, USA</div>
+            <div className="text-accent text-xs sm:text-sm tracking-widest opacity-80">Jacksonville, FL</div>
           </div>
         </a>
 

@@ -23,8 +23,8 @@ const contactDetails = [
   {
     icon: MapPin,
     label: 'Address',
-    value: 'Al-Amir Islamic Center\nFlorida, USA',
-    sub: 'Full address to be confirmed',
+    value: 'Al-Amir Islamic Center\n5045 Soutel Dr Unit 38\nJacksonville, FL 32208',
+    sub: '',
     accent: false,
   },
   {
