@@ -48,13 +48,13 @@ export default function LocationSection() {
         description="Al-Amir Islamic Center — Your masjid in South Florida, open daily for the entire community"
       />
 
-      <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-start w-full">
+      <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start w-full">
 
-        {/* Map */}
+        {/* Map — fixed height, consistent border */}
         <div className={`reveal-left ${visible ? 'visible' : ''} w-full`}>
           <div
-            className="rounded-2xl md:rounded-3xl overflow-hidden border border-accent/15 shadow-[0_20px_80px_rgba(0,0,0,0.4)]"
-            style={{ height: '380px' }}
+            className="rounded-2xl overflow-hidden border border-accent/15 shadow-[0_16px_60px_rgba(0,0,0,0.4)]"
+            style={{ height: '360px' }}
           >
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3441.3179575834943!2d-81.72926942443266!3d30.398719574747112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e5bb001121e067%3A0x954968320fec7553!2sAl%20Amir%20Islami%20Center!5e0!3m2!1sen!2sbd!4v1775638467148!5m2!1sen!2sbd"
@@ -68,44 +68,46 @@ export default function LocationSection() {
             />
           </div>
 
+          {/* Google Maps CTA — 20-24px gap from map */}
           <a
             href="https://maps.google.com/?q=Al-Amir+Islamic+Center+Florida"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 sm:mt-7 md:mt-8 flex items-center justify-center gap-3 w-full py-4 sm:py-5 px-6 rounded-xl border border-accent/30 text-accent hover:bg-accent/10 hover:border-accent/60 transition-all duration-300 hover:scale-[1.02] text-sm sm:text-base font-medium hover:shadow-[0_8px_32px_rgba(201,168,76,0.2)]"
+            className="mt-5 flex items-center justify-center gap-2.5 w-full py-3.5 px-6 rounded-xl border border-accent/30 text-accent hover:bg-accent/10 hover:border-accent/60 transition-all duration-300 hover:scale-[1.01] text-sm font-medium hover:shadow-[0_8px_28px_rgba(201,168,76,0.18)]"
           >
             <span>📍</span> Open in Google Maps
           </a>
         </div>
 
-        {/* Contact info */}
-        <div className={`reveal-right ${visible ? 'visible' : ''} space-y-4 sm:space-y-5 md:space-y-6 w-full`}>
+        {/* Contact info — 16-20px gap between cards */}
+        <div className={`reveal-right ${visible ? 'visible' : ''} space-y-4 w-full`}>
           {contactItems.map((item, i) => (
             <div
               key={item.label}
               className={`
-                gold-hover-card rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-7
+                gold-hover-card rounded-xl p-5 sm:p-6
                 bg-gradient-to-br from-blue-950/40 to-black/40
                 backdrop-blur-sm
                 ${item.highlight ? 'border-accent/35 bg-accent/5' : ''}
                 reveal reveal-delay-${Math.min(i + 1, 6)} ${visible ? 'visible' : ''}
               `}
             >
-              <div className="flex items-start gap-4 sm:gap-5">
-                <span className="text-2xl sm:text-3xl flex-shrink-0 mt-1">{item.icon}</span>
+              <div className="flex items-start gap-4">
+                <span className="text-2xl flex-shrink-0 mt-0.5">{item.icon}</span>
                 <div className="flex-1 min-w-0">
-                  <div className={`text-xs font-bold uppercase tracking-widest mb-2 sm:mb-3 ${item.highlight ? 'text-accent' : 'text-yellow-400/80'}`}>
+                  {/* Label — 12px gap to value */}
+                  <div className={`text-xs font-bold uppercase tracking-widest mb-2 ${item.highlight ? 'text-accent' : 'text-yellow-400/80'}`}>
                     {item.label}
                   </div>
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="text-gray-300 text-sm sm:text-base hover:text-accent transition-colors whitespace-pre-line block"
+                      className="text-gray-300 text-sm hover:text-accent transition-colors whitespace-pre-line block leading-relaxed"
                     >
                       {item.value}
                     </a>
                   ) : (
-                    <div className="text-gray-300 text-sm sm:text-base whitespace-pre-line leading-relaxed">
+                    <div className="text-gray-300 text-sm whitespace-pre-line leading-relaxed">
                       {item.value}
                     </div>
                   )}

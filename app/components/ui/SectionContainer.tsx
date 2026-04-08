@@ -17,11 +17,11 @@ export function SectionContainer({
   bg = 'none',
   pattern = false,
 }: SectionContainerProps) {
-  // Consistent vertical spacing scale (80px - 120px between sections)
+  // Consistent vertical spacing scale (80px – 128px between sections)
   const pyClasses = {
-    small:  'py-16 sm:py-20 md:py-24 lg:py-28',
-    medium: 'py-20 sm:py-28 md:py-32 lg:py-40',
-    large:  'py-24 sm:py-32 md:py-40 lg:py-48',
+    small:  'py-10 sm:py-12 md:py-14 lg:py-16',
+    medium: 'py-14 sm:py-16 md:py-20 lg:py-24',
+    large:  'py-20 sm:py-24 md:py-28',
   };
 
   const bgClasses = {

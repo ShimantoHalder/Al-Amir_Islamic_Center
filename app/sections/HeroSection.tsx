@@ -124,70 +124,70 @@ function HeroContent() {
     >
       {/* Bismillah */}
       <div
-        className="font-arabic text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2 sm:mb-3 md:mb-4 crescent leading-relaxed tracking-wide"
+        className="font-arabic text-xl sm:text-2xl md:text-3xl mb-2 sm:mb-3 crescent leading-relaxed tracking-wide"
         style={{ color: '#c9a84c' }}
       >
         بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
       </div>
-      <p className="text-accent text-xs sm:text-sm md:text-base tracking-widest mb-6 sm:mb-8 md:mb-10 opacity-75 font-light">
+      <p className="text-accent text-xs sm:text-sm tracking-widest mb-6 sm:mb-8 opacity-75 font-light">
         In the name of Allah, the Most Gracious, the Most Merciful
       </p>
 
-      {/* Mosque illustration - Improved spacing */}
-      <div className="w-full px-2 sm:px-4 mb-6 sm:mb-8 md:mb-10 flex justify-center">
-        <div className="w-full max-w-md">
+      {/* Mosque illustration */}
+      <div className="w-full mb-6 sm:mb-8 flex justify-center">
+        <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
           <MosqueSVG />
         </div>
       </div>
 
-      {/* Main title - Improved typography and spacing */}
+      {/* Main title — H1: 40-48px base, scales up */}
       <h1
-        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mt-3 sm:mt-4 md:mt-5 leading-tight tracking-wide px-4"
+        className="text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-tight tracking-wide px-4"
         style={{ textShadow: '0 0 60px rgba(26,49,91,0.8)' }}
       >
         Al-Amir
-        <br className="my-1 sm:my-2" />
+        <br />
         <span className="gold-text">Islamic Center</span>
       </h1>
 
-      {/* Ornate divider */}
-      <div className="ornate-divider mt-6 sm:mt-7 md:mt-8 mb-6 sm:mb-7 md:mb-8 w-40 sm:w-52 mx-auto">
+      {/* Ornate divider — 16px gap each side */}
+      <div className="ornate-divider mt-5 mb-5 w-40 sm:w-52 mx-auto">
         <span>✦</span>
         <span className="text-xs opacity-50">◆</span>
         <span>✦</span>
       </div>
 
-      {/* Subtitle - Improved spacing and typography */}
-      <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed px-4 sm:px-6">
+      {/* Subtitle — body text 16px, max-width for readability */}
+      <p className="text-base sm:text-lg text-gray-300 max-w-xl mx-auto leading-relaxed px-4 sm:px-6">
         Your home for worship, community &amp; spiritual growth in{' '}
         <span className="text-accent font-semibold">South Florida, USA</span>.
         <br className="hidden sm:block" />
         Join us for Salah, Jumu&apos;ah &amp; community events.
       </p>
 
-      {/* CTA Buttons - Unified button styling with consistent spacing */}
-      <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center mt-12 sm:mt-14 md:mt-16 w-full px-6 max-w-sm sm:max-w-none mx-auto">
+      {/* CTA Buttons — 12-16px gap, standard 12px 24px padding */}
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mt-8 sm:mt-10 w-full px-4 max-w-sm sm:max-w-none mx-auto">
         <a
           href="#prayer-times"
-          className="btn-base btn-secondary px-12 sm:px-14 md:px-16 py-3.5 sm:py-4 md:py-5 text-sm sm:text-base"
+          className="btn-base btn-secondary w-full sm:w-auto"
         >
-          <span className="text-lg">🕌</span> Prayer Times
+          <span>🕌</span> Prayer Times
         </a>
         <a
           href="#contact"
-          className="donate-btn btn-base px-12 sm:px-14 md:px-16 py-3.5 sm:py-4 md:py-5 text-sm sm:text-base"
+          className="donate-btn btn-base w-full sm:w-auto"
         >
-          <span className="text-lg">✉️</span> Contact Us
+          <span>✉️</span> Contact Us
         </a>
       </div>
 
-      {/* Jumu'ah badge - Improved spacing and layout */}
-      <div className="mt-10 sm:mt-12 md:mt-14 inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 glass-card rounded-full px-6 sm:px-7 md:px-8 py-3 sm:py-3.5 md:py-4 text-center border border-accent/20">
+      {/* Jumu'ah badge — 32-40px gap from buttons */}
+      <div className="mt-8 sm:mt-10 inline-flex flex-col sm:flex-row items-center gap-3 glass-card rounded-full px-6 py-3 text-center border border-accent/20">
         <div className="relative flex-shrink-0 w-3 h-3">
           <div className="w-full h-full rounded-full bg-accent pulse-ring absolute inset-0" />
           <div className="w-full h-full rounded-full bg-accent relative z-10" />
         </div>
-        <span className="text-light text-xs sm:text-sm md:text-base font-light">
+        <span className="text-light text-xs sm:text-sm font-light">
           Jumu&apos;ah Khutbah —{' '}
           <span className="text-accent font-bold">Every Friday at 1:15 PM</span>
         </span>
