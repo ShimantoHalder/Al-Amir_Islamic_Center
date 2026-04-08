@@ -52,26 +52,26 @@ export default function Navbar() {
         scrolled ? 'nav-blur shadow-[0_4px_30px_rgba(0,0,0,0.4)]' : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14 sm:h-16 md:h-18">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 sm:h-18 md:h-20">
 
         {/* Logo */}
-        <a href="#home" className="flex items-center gap-2.5 group flex-shrink-0">
-          <span className="text-xl sm:text-2xl crescent leading-none">☪</span>
+        <a href="#home" className="flex items-center gap-3 group flex-shrink-0">
+          <span className="text-2xl sm:text-3xl crescent leading-none">☪</span>
           <div className="hidden sm:block">
-            <div className="text-white font-bold text-xs sm:text-sm md:text-base leading-tight group-hover:text-accent transition-colors duration-300 tracking-wide">
+            <div className="text-white font-bold text-sm sm:text-base md:text-lg leading-tight group-hover:text-accent transition-colors duration-300 tracking-wide">
               Al-Amir Islamic Center
             </div>
-            <div className="text-accent text-xs tracking-widest opacity-80">Florida, USA</div>
+            <div className="text-accent text-xs sm:text-sm tracking-widest opacity-80">Florida, USA</div>
           </div>
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-1 lg:gap-2">
+        <div className="hidden md:flex items-center gap-2 lg:gap-3">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className={`relative px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium transition-colors duration-200 group rounded-lg hover:bg-white/5 ${
+              className={`relative px-4 lg:px-5 py-2.5 text-sm lg:text-base font-medium transition-colors duration-200 group rounded-lg hover:bg-white/5 ${
                 activeSection === l.href.replace('#', '')
                   ? 'text-accent'
                   : 'text-gray-300 hover:text-accent'
@@ -79,7 +79,7 @@ export default function Navbar() {
             >
               {l.label}
               <span
-                className={`absolute bottom-0 left-3 lg:left-4 right-3 lg:right-4 h-px bg-accent transition-all duration-300 ${
+                className={`absolute bottom-1 left-4 lg:left-5 right-4 lg:right-5 h-0.5 bg-accent transition-all duration-300 ${
                   activeSection === l.href.replace('#', '') ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100'
                 }`}
               />
@@ -87,7 +87,7 @@ export default function Navbar() {
           ))}
           <a
             href="#donate"
-            className="donate-btn text-black font-bold text-xs lg:text-sm px-6 lg:px-8 py-2.5 lg:py-3 rounded-full ml-3 cursor-pointer whitespace-nowrap"
+            className="donate-btn text-black font-bold text-sm lg:text-base px-8 lg:px-10 py-3 lg:py-3.5 rounded-full ml-4 cursor-pointer whitespace-nowrap transition-all duration-300 hover:scale-105"
           >
             Donate
           </a>
@@ -110,13 +110,13 @@ export default function Navbar() {
         }`}
       >
         <div className="nav-blur border-t border-accent/10">
-          <div className="flex flex-col px-4 py-4 gap-1 max-w-sm mx-auto">
+          <div className="flex flex-col px-4 py-6 gap-2 max-w-sm mx-auto">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 ${
+                className={`flex items-center gap-3 py-3.5 px-5 rounded-xl text-base font-medium transition-all duration-200 ${
                   activeSection === l.href.replace('#', '')
                     ? 'text-accent bg-accent/10 border border-accent/20'
                     : 'text-gray-300 hover:text-accent hover:bg-white/5'
@@ -128,7 +128,7 @@ export default function Navbar() {
             <a
               href="#donate"
               onClick={() => setOpen(false)}
-              className="donate-btn text-center text-black font-bold text-sm px-6 py-3 rounded-full mt-2 cursor-pointer"
+              className="donate-btn text-center text-black font-bold text-base px-8 py-4 rounded-full mt-4 cursor-pointer transition-all duration-300 hover:scale-105"
             >
               🤲 Donate Now
             </a>

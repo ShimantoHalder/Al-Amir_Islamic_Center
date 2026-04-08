@@ -17,10 +17,11 @@ export function SectionContainer({
   bg = 'none',
   pattern = false,
 }: SectionContainerProps) {
+  // Consistent vertical spacing scale (80px - 120px between sections)
   const pyClasses = {
-    small:  'py-12 sm:py-16 md:py-20',
-    medium: 'py-16 sm:py-24 md:py-28 lg:py-32',
-    large:  'py-20 sm:py-28 md:py-32 lg:py-40',
+    small:  'py-16 sm:py-20 md:py-24 lg:py-28',
+    medium: 'py-20 sm:py-28 md:py-32 lg:py-40',
+    large:  'py-24 sm:py-32 md:py-40 lg:py-48',
   };
 
   const bgClasses = {
@@ -42,7 +43,8 @@ export function SectionContainer({
         ${className}
       `}
     >
-      <div className="max-w-6xl mx-auto w-full">
+      {/* Max-width container with consistent horizontal centering */}
+      <div className="max-w-7xl mx-auto w-full">
         {children}
       </div>
     </section>

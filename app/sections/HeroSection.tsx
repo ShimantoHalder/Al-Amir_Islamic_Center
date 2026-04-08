@@ -124,67 +124,70 @@ function HeroContent() {
     >
       {/* Bismillah */}
       <div
-        className="font-arabic text-lg sm:text-xl md:text-2xl lg:text-3xl mb-1 sm:mb-2 crescent leading-relaxed tracking-wide"
+        className="font-arabic text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2 sm:mb-3 md:mb-4 crescent leading-relaxed tracking-wide"
         style={{ color: '#c9a84c' }}
       >
         بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
       </div>
-      <p className="text-accent text-xs sm:text-sm tracking-widest mb-5 sm:mb-7 opacity-75 font-light">
+      <p className="text-accent text-xs sm:text-sm md:text-base tracking-widest mb-6 sm:mb-8 md:mb-10 opacity-75 font-light">
         In the name of Allah, the Most Gracious, the Most Merciful
       </p>
 
-      {/* Mosque illustration */}
-      <div className="w-full px-2 sm:px-4 mb-4 sm:mb-6 flex justify-center">
-        <MosqueSVG />
+      {/* Mosque illustration - Improved spacing */}
+      <div className="w-full px-2 sm:px-4 mb-6 sm:mb-8 md:mb-10 flex justify-center">
+        <div className="w-full max-w-md">
+          <MosqueSVG />
+        </div>
       </div>
 
-      {/* Main title */}
+      {/* Main title - Improved typography and spacing */}
       <h1
-        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mt-1 sm:mt-2 leading-tight tracking-wide px-4"
+        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mt-3 sm:mt-4 md:mt-5 leading-tight tracking-wide px-4"
         style={{ textShadow: '0 0 60px rgba(26,49,91,0.8)' }}
       >
         Al-Amir
-        <br />
+        <br className="my-1 sm:my-2" />
         <span className="gold-text">Islamic Center</span>
       </h1>
 
       {/* Ornate divider */}
-      <div className="ornate-divider mt-4 sm:mt-5 mb-4 sm:mb-5 w-40 sm:w-52 mx-auto">
+      <div className="ornate-divider mt-6 sm:mt-7 md:mt-8 mb-6 sm:mb-7 md:mb-8 w-40 sm:w-52 mx-auto">
         <span>✦</span>
         <span className="text-xs opacity-50">◆</span>
         <span>✦</span>
       </div>
 
-      <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-lg mx-auto leading-relaxed px-4">
+      {/* Subtitle - Improved spacing and typography */}
+      <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed px-4 sm:px-6">
         Your home for worship, community &amp; spiritual growth in{' '}
         <span className="text-accent font-semibold">South Florida, USA</span>.
         <br className="hidden sm:block" />
         Join us for Salah, Jumu&apos;ah &amp; community events.
       </p>
 
-      {/* CTA Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10 sm:mt-12 w-full px-6 max-w-sm sm:max-w-none mx-auto">
+      {/* CTA Buttons - Unified button styling with consistent spacing */}
+      <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center mt-12 sm:mt-14 md:mt-16 w-full px-6 max-w-sm sm:max-w-none mx-auto">
         <a
           href="#prayer-times"
-          className="group px-12 sm:px-16 md:px-20 py-3.5 sm:py-4 rounded-full font-semibold text-sm sm:text-base text-white border border-blue-500/50 hover:border-accent/60 hover:bg-blue-900/30 transition-all duration-300 hover:scale-105 hover:shadow-[0_4px_20px_rgba(201,168,76,0.2)] whitespace-nowrap flex items-center justify-center gap-2.5"
+          className="btn-base btn-secondary px-12 sm:px-14 md:px-16 py-3.5 sm:py-4 md:py-5 text-sm sm:text-base"
         >
-          <span className="text-base">🕌</span> Prayer Times
+          <span className="text-lg">🕌</span> Prayer Times
         </a>
         <a
           href="#contact"
-          className="donate-btn px-12 sm:px-16 md:px-20 py-3.5 sm:py-4 rounded-full font-semibold text-sm sm:text-base text-black whitespace-nowrap flex items-center justify-center gap-2.5"
+          className="donate-btn btn-base px-12 sm:px-14 md:px-16 py-3.5 sm:py-4 md:py-5 text-sm sm:text-base"
         >
-          <span className="text-base">✉️</span> Contact Us
+          <span className="text-lg">✉️</span> Contact Us
         </a>
       </div>
 
-      {/* Jumu'ah badge */}
-      <div className="mt-6 sm:mt-8 inline-flex flex-col sm:flex-row items-center gap-2 glass-card rounded-full px-5 sm:px-6 py-2.5 sm:py-3 text-center border border-accent/20">
-        <div className="relative flex-shrink-0">
-          <div className="w-2.5 h-2.5 rounded-full bg-accent pulse-ring absolute inset-0" />
-          <div className="w-2.5 h-2.5 rounded-full bg-accent relative z-10" />
+      {/* Jumu'ah badge - Improved spacing and layout */}
+      <div className="mt-10 sm:mt-12 md:mt-14 inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 glass-card rounded-full px-6 sm:px-7 md:px-8 py-3 sm:py-3.5 md:py-4 text-center border border-accent/20">
+        <div className="relative flex-shrink-0 w-3 h-3">
+          <div className="w-full h-full rounded-full bg-accent pulse-ring absolute inset-0" />
+          <div className="w-full h-full rounded-full bg-accent relative z-10" />
         </div>
-        <span className="text-light text-xs sm:text-sm font-light">
+        <span className="text-light text-xs sm:text-sm md:text-base font-light">
           Jumu&apos;ah Khutbah —{' '}
           <span className="text-accent font-bold">Every Friday at 1:15 PM</span>
         </span>

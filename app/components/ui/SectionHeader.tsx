@@ -9,15 +9,26 @@ interface SectionHeaderProps {
 
 export function SectionHeader({ icon, title, subtitle, description }: SectionHeaderProps) {
   return (
-    <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-14">
-      <span className="inline-block text-3xl sm:text-4xl md:text-5xl mb-2 sm:mb-3">{icon}</span>
-      <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mt-2 sm:mt-3">
+    <div className="text-center mb-12 sm:mb-14 md:mb-16 lg:mb-20">
+      {/* Icon spacing */}
+      <span className="inline-block text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-5">
+        {icon}
+      </span>
+      
+      {/* Heading */}
+      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-3 sm:mt-4 tracking-wide">
         {title}
       </h2>
-      {subtitle && <div className="mt-2 sm:mt-3">{subtitle}</div>}
-      <div className="section-divider mx-auto mt-3 sm:mt-4 mb-4 sm:mb-6" />
+      
+      {/* Subtitle spacing */}
+      {subtitle && <div className="mt-4 sm:mt-5 md:mt-6">{subtitle}</div>}
+      
+      {/* Divider with consistent sizing */}
+      <div className="section-divider mx-auto mt-4 sm:mt-5 md:mt-6 mb-6 sm:mb-7 md:mb-8" />
+      
+      {/* Description */}
       {description && (
-        <p className="text-gray-400 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed px-2">
+        <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto px-3">
           {description}
         </p>
       )}

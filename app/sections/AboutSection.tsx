@@ -116,33 +116,35 @@ export default function AboutSection() {
         description="Al-Amir Islamic Center is a vibrant Muslim community hub in South Florida, dedicated to worship, education, and serving our neighbors with sincerity and compassion."
       />
 
-      {/* Mission + Visual */}
+      {/* Mission + Visual - Improved spacing and alignment */}
       <div
         ref={cardRef}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-14 items-stretch mb-12 sm:mb-16 md:mb-20"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-16 lg:gap-20 items-stretch mb-16 sm:mb-20 md:mb-24 lg:mb-32"
       >
         {/* Mission card */}
         <div className={`reveal-left ${cardVisible ? 'visible' : ''}`}>
-          <Card className="h-full p-6 sm:p-7 md:p-8">
-            <h3 className="text-accent font-bold text-lg sm:text-xl md:text-2xl mb-4 sm:mb-5 tracking-wide">
+          <Card className="h-full p-7 sm:p-8 md:p-9 lg:p-10">
+            <h3 className="text-accent font-bold text-xl sm:text-2xl md:text-3xl mb-5 sm:mb-6 md:mb-7 tracking-wide">
               Our Mission
             </h3>
-            <p className="text-gray-300 leading-relaxed text-sm sm:text-base mb-6 sm:mb-7">
+            <p className="text-gray-300 leading-relaxed text-base sm:text-lg md:text-lg mb-7 sm:mb-8 md:mb-9">
               To establish a house of Allah where every Muslim — new to Islam or born into the
               faith — finds a welcoming space for prayer, learning, and brotherhood. We serve the
               entire South Florida Muslim community with sincerity and love.
             </p>
+            
             {/* Arabic quote */}
-            <div className="bg-accent/8 border border-accent/20 rounded-xl p-3 sm:p-4 mb-6 text-center">
-              <p className="font-arabic text-accent text-base sm:text-lg leading-loose">
+            <div className="bg-accent/8 border border-accent/20 rounded-xl p-4 sm:p-5 md:p-6 mb-7 sm:mb-8 md:mb-9 text-center">
+              <p className="font-arabic text-accent text-lg sm:text-xl md:text-2xl leading-loose">
                 وَأَنَّ الْمَسَاجِدَ لِلَّهِ فَلَا تَدْعُوا مَعَ اللَّهِ أَحَدًا
               </p>
-              <p className="text-gray-500 text-xs mt-2 italic">
+              <p className="text-gray-500 text-xs sm:text-sm mt-3 sm:mt-4 italic">
                 &quot;And the masjids are for Allah, so invoke not anyone along with Allah.&quot; — Quran 72:18
               </p>
             </div>
+            
             {/* Stats */}
-            <div className="border-t border-blue-800/30 pt-5 sm:pt-6 grid grid-cols-4 gap-3 sm:gap-4">
+            <div className="border-t border-blue-800/30 pt-6 sm:pt-7 md:pt-8 grid grid-cols-4 gap-4 sm:gap-5">
               {stats.map((s) => (
                 <AnimatedStat key={s.label} num={s.num} label={s.label} />
               ))}
@@ -151,11 +153,11 @@ export default function AboutSection() {
         </div>
 
         {/* Islamic star visual */}
-        <div className={`reveal-right ${cardVisible ? 'visible' : ''} flex items-center justify-center min-h-60 sm:min-h-72 md:min-h-80`}>
-          <div className="relative w-56 sm:w-64 md:w-72 h-56 sm:h-64 md:h-72 crescent">
+        <div className={`reveal-right ${cardVisible ? 'visible' : ''} flex items-center justify-center min-h-72 sm:min-h-80 md:min-h-96`}>
+          <div className="relative w-64 sm:w-72 md:w-80 h-64 sm:h-72 md:h-80 crescent">
             <IslamicStar />
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <div className="text-xs text-gray-600 mt-12 sm:mt-14 tracking-widest uppercase text-center">
+              <div className="text-xs text-gray-600 mt-16 sm:mt-18 tracking-widest uppercase text-center">
                 Est. Florida, USA
               </div>
             </div>
@@ -163,10 +165,10 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {/* Value cards */}
+      {/* Value cards - Improved spacing and consistency */}
       <div
         ref={valueRef}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 md:gap-8"
       >
         {values.map((v, i) => (
           <Card
@@ -176,7 +178,7 @@ export default function AboutSection() {
             interactive
             className={`text-left reveal reveal-delay-${i + 1} ${valueVisible ? 'visible' : ''}`}
           >
-            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">{v.desc}</p>
+            <p className="text-gray-400 text-sm sm:text-base leading-relaxed">{v.desc}</p>
           </Card>
         ))}
       </div>
