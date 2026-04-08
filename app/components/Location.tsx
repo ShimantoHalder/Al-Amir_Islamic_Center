@@ -18,7 +18,7 @@ export default function Location() {
           {/* Map */}
           <div className="rounded-lg md:rounded-2xl overflow-hidden border border-blue-800/40 w-full" style={{ height: '300px', minHeight: '300px' }}>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57258.9!2d-80.3!3d25.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b9d8c2b90bcb%3A0x1!2sFlorida%2C+USA!5e0!3m2!1sen!2sus!4v1234567890"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3441.3179575834943!2d-81.72926942443266!3d30.398719574747112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e5bb001121e067%3A0x954968320fec7553!2sAl%20Amir%20Islami%20Center!5e0!3m2!1sen!2sbd!4v1775638467148!5m2!1sen!2sbd"
               width="100%"
               height="100%"
               style={{ border: 0 }}
