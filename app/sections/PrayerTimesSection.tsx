@@ -1,12 +1,13 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { SectionContainer, SectionHeader, Card } from '@/app/components/ui';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { SectionContainer, SectionHeader } from '@/app/components/ui';
 import { useScrollReveal } from '@/app/hooks';
 
 interface PrayerTime {
   name: string;
   arabic: string;
-  time: string;
+  time24: string;      // "HH:MM" 24-hour — used for math only
+  timeDisplay: string; // "H:MM AM/PM"    — shown to user
   icon: string;
 }
 
@@ -16,124 +17,211 @@ interface HijriDate {
   year: string;
 }
 
-async function fetchPrayerTimes(): Promise<{ prayers: PrayerTime[]; hijri: HijriDate | null }> {
+// ─── Florida / Eastern timezone helpers ──────────────────────────────────────
+
+/**
+ * Returns a plain Date whose .getHours()/.getMinutes() equal the current
+ * Eastern time (handles DST automatically via Intl).
+ */
+function getEasternNow(): Date {
+  const str = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+  return new Date(str);
+}
+
+function getEasternDateString(): string {
+  return new Date().toLocaleDateString('en-US', {
+    timeZone: 'America/New_York',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+/** Milliseconds until the next midnight in Eastern time (+500 ms buffer). */
+function msUntilMidnightEastern(): number {
+  const et      = getEasternNow();
+  const elapsed = (et.getHours() * 3600 + et.getMinutes() * 60 + et.getSeconds()) * 1000;
+  return 24 * 60 * 60 * 1000 - elapsed + 500;
+}
+
+// ─── Time format helpers ──────────────────────────────────────────────────────
+
+/**
+ * Strip any trailing timezone label the API sometimes appends, e.g. " (EDT)".
+ * Returns a clean "HH:MM" string.
+ */
+function cleanTime(raw: string): string {
+  return raw.split(' ')[0].trim();
+}
+
+/** Parse "HH:MM" (24-hour) → total minutes since midnight. */
+function toMinutes(time24: string): number {
+  const [h, m] = cleanTime(time24).split(':').map(Number);
+  return (h || 0) * 60 + (m || 0);
+}
+
+/** Convert "HH:MM" (24-hour) → "H:MM AM/PM". */
+function fmt12(raw: string): string {
+  const [hStr, mStr] = cleanTime(raw).split(':');
+  let   h  = parseInt(hStr, 10);
+  const m  = mStr ?? '00';
+  const p  = h >= 12 ? 'PM' : 'AM';
+  if (h > 12)     h -= 12;
+  else if (h === 0) h = 12;
+  return `${h}:${m} ${p}`;
+}
+
+// ─── Fallback times (Jacksonville, FL — approximate) ─────────────────────────
+
+const FALLBACK: PrayerTime[] = [
+  { name: 'Fajr',    arabic: 'الفجر',  time24: '05:42', timeDisplay: '5:42 AM',  icon: '🌙' },
+  { name: 'Sunrise', arabic: 'الشروق', time24: '07:03', timeDisplay: '7:03 AM',  icon: '🌅' },
+  { name: 'Dhuhr',   arabic: 'الظهر',  time24: '13:12', timeDisplay: '1:12 PM',  icon: '☀️' },
+  { name: 'Asr',     arabic: 'العصر',  time24: '16:35', timeDisplay: '4:35 PM',  icon: '🌤' },
+  { name: 'Maghrib', arabic: 'المغرب', time24: '19:22', timeDisplay: '7:22 PM',  icon: '🌇' },
+  { name: 'Isha',    arabic: 'العشاء', time24: '20:45', timeDisplay: '8:45 PM',  icon: '🌑' },
+];
+
+// ─── API fetch ────────────────────────────────────────────────────────────────
+
+async function fetchPrayerTimes(): Promise<{
+  prayers: PrayerTime[];
+  hijri: HijriDate | null;
+  fromAPI: boolean;
+}> {
   try {
-    const today = new Date();
-    const day   = today.getDate();
-    const month = today.getMonth() + 1;
-    const year  = today.getFullYear();
-    const res  = await fetch(
-      `https://api.aladhan.com/v1/timingsByCity/${day}-${month}-${year}?city=Miami&country=US&method=2`
-    );
+    // Use today's date in Eastern time (so it is always correct for Florida,
+    // even for visitors whose browser clock is in a different timezone).
+    const et    = getEasternNow();
+    const day   = et.getDate();
+    const month = et.getMonth() + 1;
+    const year  = et.getFullYear();
+
+    // Exact coordinates of Al-Amir Islamic Center (Jacksonville, FL)
+    // Method 2 = ISNA (standard for North America)
+    const url =
+      `https://api.aladhan.com/v1/timings/${day}-${month}-${year}` +
+      `?latitude=30.398719&longitude=-81.729269&method=2&school=0`;
+
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
     const data = await res.json();
-    const t    = data.data.timings;
+    const t    = data.data.timings as Record<string, string>;
     const h    = data.data.date?.hijri;
+
     const prayers: PrayerTime[] = [
-      { name: 'Fajr',    arabic: 'الفجر',  time: t.Fajr,    icon: '🌙' },
-      { name: 'Sunrise', arabic: 'الشروق', time: t.Sunrise, icon: '🌅' },
-      { name: 'Dhuhr',   arabic: 'الظهر',  time: t.Dhuhr,   icon: '☀️' },
-      { name: 'Asr',     arabic: 'العصر',  time: t.Asr,     icon: '🌤' },
-      { name: 'Maghrib', arabic: 'المغرب', time: t.Maghrib, icon: '🌇' },
-      { name: 'Isha',    arabic: 'العشاء', time: t.Isha,    icon: '🌑' },
+      { name: 'Fajr',    arabic: 'الفجر',  time24: cleanTime(t.Fajr),    timeDisplay: fmt12(t.Fajr),    icon: '🌙' },
+      { name: 'Sunrise', arabic: 'الشروق', time24: cleanTime(t.Sunrise), timeDisplay: fmt12(t.Sunrise), icon: '🌅' },
+      { name: 'Dhuhr',   arabic: 'الظهر',  time24: cleanTime(t.Dhuhr),   timeDisplay: fmt12(t.Dhuhr),   icon: '☀️' },
+      { name: 'Asr',     arabic: 'العصر',  time24: cleanTime(t.Asr),     timeDisplay: fmt12(t.Asr),     icon: '🌤' },
+      { name: 'Maghrib', arabic: 'المغرب', time24: cleanTime(t.Maghrib), timeDisplay: fmt12(t.Maghrib), icon: '🌇' },
+      { name: 'Isha',    arabic: 'العشاء', time24: cleanTime(t.Isha),    timeDisplay: fmt12(t.Isha),    icon: '🌑' },
     ];
+
     const hijri: HijriDate | null = h
       ? { day: h.day, month: h.month.en, year: h.year }
       : null;
-    return { prayers, hijri };
+
+    return { prayers, hijri, fromAPI: true };
   } catch {
-    return {
-      prayers: [
-        { name: 'Fajr',    arabic: 'الفجر',  time: '5:42 AM', icon: '🌙' },
-        { name: 'Sunrise', arabic: 'الشروق', time: '7:03 AM', icon: '🌅' },
-        { name: 'Dhuhr',   arabic: 'الظهر',  time: '1:12 PM', icon: '☀️' },
-        { name: 'Asr',     arabic: 'العصر',  time: '4:35 PM', icon: '🌤' },
-        { name: 'Maghrib', arabic: 'المغرب', time: '7:22 PM', icon: '🌇' },
-        { name: 'Isha',    arabic: 'العشاء', time: '8:45 PM', icon: '🌑' },
-      ],
-      hijri: null,
-    };
+    return { prayers: FALLBACK, hijri: null, fromAPI: false };
   }
 }
 
-function toMinutes(t: string): number {
-  const clean = t.replace(/\s*(AM|PM)/i, '');
-  const [h, m] = clean.split(':').map(Number);
-  const isPM   = t.toUpperCase().includes('PM');
-  let hours    = h;
-  if (isPM && h !== 12) hours += 12;
-  if (!isPM && h === 12) hours = 0;
-  return hours * 60 + m;
-}
+// ─── Active / next prayer (all comparisons in Eastern time) ──────────────────
 
-function getActivePrayer(prayers: PrayerTime[]): string {
-  const now        = new Date();
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
-  let active       = prayers[prayers.length - 1]?.name || '';
-  for (let i = prayers.length - 1; i >= 0; i--) {
-    if (prayers[i].name === 'Sunrise') continue;
-    if (nowMinutes >= toMinutes(prayers[i].time)) {
-      active = prayers[i].name;
+function getActive(prayers: PrayerTime[]): string {
+  const et         = getEasternNow();
+  const nowMinutes = et.getHours() * 60 + et.getMinutes();
+  const salah      = prayers.filter((p) => p.name !== 'Sunrise');
+  let   active     = salah[salah.length - 1]?.name ?? '';
+  for (let i = salah.length - 1; i >= 0; i--) {
+    if (nowMinutes >= toMinutes(salah[i].time24)) {
+      active = salah[i].name;
       break;
     }
   }
   return active;
 }
 
-function getNextPrayer(prayers: PrayerTime[]): { name: string; countdown: string } {
-  const now        = new Date();
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
-  const prayerList = prayers.filter((p) => p.name !== 'Sunrise');
-  for (const p of prayerList) {
-    const pMin = toMinutes(p.time);
-    if (pMin > nowMinutes) {
-      const diff = pMin - nowMinutes;
-      const h    = Math.floor(diff / 60);
-      const m    = diff % 60;
-      return {
-        name: p.name,
-        countdown: h > 0 ? `${h}h ${m}m` : `${m}m`,
-      };
+function getNext(prayers: PrayerTime[]): { name: string; countdown: string } {
+  const et         = getEasternNow();
+  const nowMinutes = et.getHours() * 60 + et.getMinutes();
+  const salah      = prayers.filter((p) => p.name !== 'Sunrise');
+  for (const p of salah) {
+    const diff = toMinutes(p.time24) - nowMinutes;
+    if (diff > 0) {
+      const h = Math.floor(diff / 60);
+      const m = diff % 60;
+      return { name: p.name, countdown: h > 0 ? `${h}h ${m}m` : `${m}m` };
     }
   }
-  const fajr = prayerList[0];
-  const diff = 1440 - nowMinutes + toMinutes(fajr.time);
+  // Past Isha — count down to tomorrow's Fajr
+  const diff = 1440 - nowMinutes + toMinutes(salah[0].time24);
   const h    = Math.floor(diff / 60);
   const m    = diff % 60;
-  return { name: fajr.name, countdown: h > 0 ? `${h}h ${m}m` : `${m}m` };
+  return { name: salah[0].name, countdown: h > 0 ? `${h}h ${m}m` : `${m}m` };
 }
+
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function PrayerTimesSection() {
   const [prayers,  setPrayers]  = useState<PrayerTime[]>([]);
   const [active,   setActive]   = useState('');
   const [loading,  setLoading]  = useState(true);
+  const [fromAPI,  setFromAPI]  = useState(true);
   const [dateStr,  setDateStr]  = useState('');
   const [hijri,    setHijri]    = useState<HijriDate | null>(null);
   const [nextInfo, setNextInfo] = useState<{ name: string; countdown: string } | null>(null);
-  const { ref, visible } = useScrollReveal();
+  const midnightTimer           = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { ref, visible }        = useScrollReveal();
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    const { prayers: data, hijri: h, fromAPI: ok } = await fetchPrayerTimes();
+    setPrayers(data);
+    setActive(getActive(data));
+    setNextInfo(getNext(data));
+    setHijri(h);
+    setDateStr(getEasternDateString());
+    setFromAPI(ok);
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
-    fetchPrayerTimes().then(({ prayers: data, hijri: h }) => {
-      setPrayers(data);
-      setActive(getActivePrayer(data));
-      setNextInfo(getNextPrayer(data));
-      setHijri(h);
-      setLoading(false);
-    });
-    const now = new Date();
-    setDateStr(
-      now.toLocaleDateString('en-US', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-      })
-    );
-    const interval = setInterval(() => {
+    // 1. Fetch on mount
+    load();
+    setDateStr(getEasternDateString());
+
+    // 2. Tick every minute: update active prayer + countdown in Eastern time
+    const tick = setInterval(() => {
       setPrayers((prev) => {
-        setActive(getActivePrayer(prev));
-        setNextInfo(getNextPrayer(prev));
+        if (prev.length) {
+          setActive(getActive(prev));
+          setNextInfo(getNext(prev));
+        }
         return prev;
       });
-    }, 60000);
-    return () => clearInterval(interval);
-  }, []);
+      setDateStr(getEasternDateString());
+    }, 60_000);
+
+    // 3. Re-fetch at Eastern midnight so the new day's accurate times load
+    //    automatically — no manual input ever needed.
+    const scheduleMidnight = () => {
+      midnightTimer.current = setTimeout(() => {
+        load();
+        scheduleMidnight(); // re-arm for the following day
+      }, msUntilMidnightEastern());
+    };
+    scheduleMidnight();
+
+    return () => {
+      clearInterval(tick);
+      if (midnightTimer.current) clearTimeout(midnightTimer.current);
+    };
+  }, [load]);
 
   return (
     <SectionContainer id="prayer-times" py="large" bg="gradient" pattern>
@@ -141,21 +229,33 @@ export default function PrayerTimesSection() {
         icon="🕌"
         title={<>Prayer <span className="text-accent">Times</span></>}
         subtitle={
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3">
-            <p className="text-accent text-sm sm:text-base font-medium">{dateStr || 'Loading...'}</p>
-            {hijri && (
-              <span className="text-gray-500 hidden sm:inline">·</span>
-            )}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3 flex-wrap">
+            <p className="text-accent text-sm sm:text-base font-medium">{dateStr || 'Loading…'}</p>
+            {hijri && <span className="text-gray-500 hidden sm:inline">·</span>}
             {hijri && (
               <p className="font-arabic text-accent/70 text-sm">
                 {hijri.day} {hijri.month} {hijri.year} AH
               </p>
             )}
             <span className="text-gray-500 hidden sm:inline">·</span>
-            <p className="text-gray-500 text-xs">Miami / South Florida · Auto-updated</p>
+            <p className="text-gray-500 text-xs">Jacksonville, FL · Eastern Time · Auto-updated daily</p>
           </div>
         }
       />
+
+      {/* API error warning with retry */}
+      {!loading && !fromAPI && (
+        <div className="mb-5 flex items-center gap-3 rounded-xl border border-yellow-700/30 bg-yellow-950/20 px-4 py-3 text-yellow-400/90 text-sm">
+          <span className="flex-shrink-0 text-base">⚠️</span>
+          <span className="flex-1">Showing estimated times — live data temporarily unavailable.</span>
+          <button
+            onClick={load}
+            className="text-xs underline opacity-70 hover:opacity-100 whitespace-nowrap flex-shrink-0 transition-opacity"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
       {/* Next prayer countdown banner */}
       {!loading && nextInfo && (
@@ -179,14 +279,14 @@ export default function PrayerTimesSection() {
       {loading ? (
         <div className="flex justify-center items-center py-16">
           <div className="w-10 h-10 border-2 border-accent border-t-transparent rounded-full animate-spin" />
-          <span className="ml-5 text-accent text-sm font-medium">Fetching prayer times for Miami...</span>
+          <span className="ml-5 text-accent text-sm font-medium">Fetching today&apos;s prayer times…</span>
         </div>
-      ) : prayers.length > 0 ? (
+      ) : (
         <div
           ref={ref}
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8 sm:mb-10 w-full"
         >
-          {prayers.filter((prayer) => prayer.name !== 'Sunrise').map((prayer, i) => (
+          {prayers.filter((p) => p.name !== 'Sunrise').map((prayer, i) => (
             <div
               key={prayer.name}
               className={`prayer-card rounded-xl sm:rounded-2xl text-center p-4 sm:p-5 flex flex-col items-center ${
@@ -195,15 +295,21 @@ export default function PrayerTimesSection() {
             >
               {/* Icon */}
               <div className="text-2xl sm:text-3xl mb-2 leading-none">{prayer.icon}</div>
-              {/* Arabic name — 12px gap from icon */}
-              <div className="font-arabic text-gray-500 text-xs sm:text-sm mb-1 leading-snug">{prayer.arabic}</div>
+              {/* Arabic name */}
+              <div className="font-arabic text-gray-500 text-xs sm:text-sm mb-1 leading-snug">
+                {prayer.arabic}
+              </div>
               {/* English name */}
-              <div className={`font-bold text-sm sm:text-base mb-2 tracking-wide ${active === prayer.name ? 'text-accent' : 'text-white'}`}>
+              <div className={`font-bold text-sm sm:text-base mb-2 tracking-wide ${
+                active === prayer.name ? 'text-accent' : 'text-white'
+              }`}>
                 {prayer.name}
               </div>
-              {/* Time — prominent */}
-              <div className={`text-base sm:text-lg font-mono font-bold leading-none ${active === prayer.name ? 'text-accent' : 'text-blue-200'}`}>
-                {prayer.time}
+              {/* Time — most prominent element */}
+              <div className={`text-base sm:text-lg font-mono font-bold leading-none ${
+                active === prayer.name ? 'text-accent' : 'text-blue-200'
+              }`}>
+                {prayer.timeDisplay}
               </div>
               {active === prayer.name && (
                 <div className="mt-2 text-xs text-accent font-semibold animate-pulse flex items-center gap-1">
@@ -213,11 +319,6 @@ export default function PrayerTimesSection() {
               )}
             </div>
           ))}
-        </div>
-      ) : (
-        <div className="text-center py-16">
-          <p className="text-accent text-base font-medium">Prayer times for Miami, Florida</p>
-          <p className="text-gray-500 text-sm mt-2">All times automatically updated</p>
         </div>
       )}
 
