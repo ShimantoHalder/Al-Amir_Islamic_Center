@@ -5,87 +5,188 @@ import { useAnimation } from '@/app/hooks';
 function MosqueSVG() {
   return (
     <svg
-      viewBox="0 0 400 200"
-      className="w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto opacity-90 float"
+      viewBox="0 0 520 240"
+      className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto float"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <ellipse cx="200" cy="110" rx="70" ry="65" fill="#1A315B" opacity="0.7" />
-      <path d="M130 110 Q200 30 270 110" fill="#276090" opacity="0.9" />
-      <path d="M80 130 Q110 90 140 130" fill="#1A315B" opacity="0.8" />
-      <path d="M260 130 Q290 90 320 130" fill="#1A315B" opacity="0.8" />
-      <rect x="60" y="80" width="16" height="80" rx="2" fill="#276090" opacity="0.8" />
-      <path d="M60 80 Q68 60 76 80" fill="#ac9861" opacity="0.9" />
-      <rect x="324" y="80" width="16" height="80" rx="2" fill="#276090" opacity="0.8" />
-      <path d="M324 80 Q332 60 340 80" fill="#ac9861" opacity="0.9" />
-      <rect x="100" y="130" width="200" height="30" rx="2" fill="#152140" opacity="0.95" />
-      <path d="M140 160 L140 140 Q150 130 160 140 L160 160Z" fill="#ac9861" opacity="0.5" />
-      <path d="M185 160 L185 140 Q195 130 205 140 L205 160Z" fill="#ac9861" opacity="0.5" />
-      <path d="M230 160 L230 140 Q240 130 250 140 L250 160Z" fill="#ac9861" opacity="0.5" />
-      <text x="68" y="78" fontSize="10" fill="#ac9861" opacity="0.9">★</text>
-      <text x="332" y="78" fontSize="10" fill="#ac9861" opacity="0.9">★</text>
-      <text x="194" y="45" fontSize="16" fill="#ac9861" opacity="1">☪</text>
-      <rect x="40" y="160" width="320" height="8" rx="4" fill="#276090" opacity="0.4" />
+      <defs>
+        <linearGradient id="domeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#276090" stopOpacity="1" />
+          <stop offset="100%" stopColor="#1A315B" stopOpacity="1" />
+        </linearGradient>
+        <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#1a2f52" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#0f1e35" stopOpacity="0.95" />
+        </linearGradient>
+        <linearGradient id="minaretGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#1e3a6e" stopOpacity="0.9" />
+          <stop offset="100%" stopColor="#276090" stopOpacity="0.9" />
+        </linearGradient>
+        <filter id="goldGlow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+
+      {/* Ground shadow */}
+      <ellipse cx="260" cy="233" rx="220" ry="6" fill="#c9a84c" opacity="0.07" />
+
+      {/* Ground base line */}
+      <rect x="40" y="226" width="440" height="6" rx="3" fill="#1e3a6e" opacity="0.7" />
+
+      {/* ── LEFT OUTER MINARET ── */}
+      <rect x="52" y="68" width="16" height="160" rx="2" fill="url(#minaretGrad)" />
+      <rect x="44" y="140" width="32" height="7" rx="1" fill="#c9a84c" opacity="0.5" />
+      <rect x="47" y="110" width="26" height="5" rx="1" fill="#c9a84c" opacity="0.4" />
+      <rect x="49" y="82" width="22" height="4" rx="1" fill="#c9a84c" opacity="0.35" />
+      <path d="M52 68 Q60 44 68 68" fill="#152140" opacity="0.95" />
+      <path d="M56 44 Q60 28 64 44" fill="#c9a84c" opacity="0.85" />
+      <circle cx="60" cy="25" r="2" fill="#c9a84c" opacity="0.9" filter="url(#goldGlow)" />
+      <text x="55.5" y="28" fontSize="9" fill="#c9a84c" opacity="0.95">★</text>
+
+      {/* ── RIGHT OUTER MINARET ── */}
+      <rect x="452" y="68" width="16" height="160" rx="2" fill="url(#minaretGrad)" />
+      <rect x="444" y="140" width="32" height="7" rx="1" fill="#c9a84c" opacity="0.5" />
+      <rect x="447" y="110" width="26" height="5" rx="1" fill="#c9a84c" opacity="0.4" />
+      <rect x="449" y="82" width="22" height="4" rx="1" fill="#c9a84c" opacity="0.35" />
+      <path d="M452 68 Q460 44 468 68" fill="#152140" opacity="0.95" />
+      <path d="M456 44 Q460 28 464 44" fill="#c9a84c" opacity="0.85" />
+      <circle cx="460" cy="25" r="2" fill="#c9a84c" opacity="0.9" filter="url(#goldGlow)" />
+      <text x="455.5" y="28" fontSize="9" fill="#c9a84c" opacity="0.95">★</text>
+
+      {/* ── SMALL SIDE DOMES ── */}
+      <path d="M105 174 Q132 122 159 174" fill="url(#domeGrad)" opacity="0.82" />
+      <ellipse cx="132" cy="174" rx="28" ry="6" fill="#0f1e35" opacity="0.6" />
+      <path d="M361 174 Q388 122 415 174" fill="url(#domeGrad)" opacity="0.82" />
+      <ellipse cx="388" cy="174" rx="28" ry="6" fill="#0f1e35" opacity="0.6" />
+
+      {/* ── INNER MINARETS ── */}
+      <rect x="118" y="100" width="13" height="126" rx="2" fill="url(#minaretGrad)" opacity="0.85" />
+      <rect x="113" y="148" width="23" height="5" rx="1" fill="#c9a84c" opacity="0.45" />
+      <path d="M118 100 Q124.5 82 131 100" fill="#152140" opacity="0.9" />
+      <path d="M121 82 Q124.5 68 128 82" fill="#c9a84c" opacity="0.75" />
+      <text x="120" y="70" fontSize="8" fill="#c9a84c" opacity="0.85">★</text>
+
+      <rect x="389" y="100" width="13" height="126" rx="2" fill="url(#minaretGrad)" opacity="0.85" />
+      <rect x="384" y="148" width="23" height="5" rx="1" fill="#c9a84c" opacity="0.45" />
+      <path d="M389 100 Q395.5 82 402 100" fill="#152140" opacity="0.9" />
+      <path d="M392 82 Q395.5 68 399 82" fill="#c9a84c" opacity="0.75" />
+      <text x="390" y="70" fontSize="8" fill="#c9a84c" opacity="0.85">★</text>
+
+      {/* ── MAIN BODY ── */}
+      <rect x="100" y="175" width="320" height="52" rx="3" fill="url(#wallGrad)" />
+
+      {/* Arched windows on body */}
+      {[130, 175, 230, 285, 340].map((x, i) => (
+        <g key={i}>
+          <path d={`M${x} 227 L${x} 192 Q${x + 13} 177 ${x + 26} 192 L${x + 26} 227Z`} fill="#0a1220" opacity="0.75" />
+          <path d={`M${x + 5} 220 L${x + 5} 197 Q${x + 13} 185 ${x + 21} 197 L${x + 21} 220Z`} fill="none" stroke="#c9a84c" strokeWidth="0.5" opacity="0.3" />
+        </g>
+      ))}
+
+      {/* Horizontal trim on body */}
+      <rect x="100" y="178" width="320" height="4" rx="2" fill="#c9a84c" opacity="0.2" />
+
+      {/* ── MAIN DOME ── */}
+      <ellipse cx="260" cy="175" rx="85" ry="18" fill="#0f1e35" opacity="0.7" />
+      <path d="M175 175 Q260 62 345 175" fill="url(#domeGrad)" opacity="0.95" />
+      <path d="M195 175 Q260 85 325 175" fill="#1a2f52" opacity="0.35" />
+      {/* Dome rib lines */}
+      {[200, 230, 260, 290, 320].map((x, i) => (
+        <line key={i} x1={x} y1="175" x2="260" y2={i === 2 ? 62 : 80} stroke="#c9a84c" strokeWidth="0.4" opacity="0.15" />
+      ))}
+      {/* Dome top finial */}
+      <circle cx="260" cy="62" r="5" fill="none" stroke="#c9a84c" strokeWidth="1" opacity="0.7" />
+      <circle cx="260" cy="62" r="2.5" fill="#c9a84c" opacity="0.9" />
+
+      {/* ── CRESCENT & STAR ON DOME ── */}
+      <text x="242" y="52" fontSize="20" fill="#c9a84c" opacity="1" filter="url(#goldGlow)">☪</text>
+
+      {/* Decorative trim line */}
+      <line x1="100" y1="175" x2="420" y2="175" stroke="#c9a84c" strokeWidth="1" opacity="0.25" />
+
+      {/* Gold gate arch at center bottom */}
+      <path d="M228 227 L228 200 Q260 182 292 200 L292 227Z" fill="#0a1220" opacity="0.9" />
+      <path d="M232 227 L232 202 Q260 186 288 202 L288 227Z" fill="none" stroke="#c9a84c" strokeWidth="0.7" opacity="0.5" />
     </svg>
   );
 }
 
 function HeroContent() {
-  const visible = useAnimation(100);
+  const visible = useAnimation(150);
 
   return (
     <div
       className={`relative z-10 text-center w-full flex flex-col items-center justify-center transition-all duration-1000 ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
       }`}
     >
-      <div className="text-sm sm:text-base md:text-xl lg:text-2xl mb-2 sm:mb-3 font-light tracking-widest crescent text-accent leading-relaxed">
-        ☪ بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ☪
+      {/* Bismillah */}
+      <div
+        className="font-arabic text-lg sm:text-xl md:text-2xl lg:text-3xl mb-1 sm:mb-2 crescent leading-relaxed tracking-wide"
+        style={{ color: '#c9a84c' }}
+      >
+        بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
       </div>
-      <p className="text-accent text-xs sm:text-sm tracking-widest mb-4 sm:mb-6 opacity-80">
+      <p className="text-accent text-xs sm:text-sm tracking-widest mb-5 sm:mb-7 opacity-75 font-light">
         In the name of Allah, the Most Gracious, the Most Merciful
       </p>
 
-      <div className="w-full px-2 mb-4 sm:mb-6 flex justify-center">
+      {/* Mosque illustration */}
+      <div className="w-full px-2 sm:px-4 mb-4 sm:mb-6 flex justify-center">
         <MosqueSVG />
       </div>
 
+      {/* Main title */}
       <h1
-        className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mt-2 sm:mt-3 md:mt-4 leading-tight px-2"
-        style={{ textShadow: '0 0 40px rgba(26,49,91,0.6)' }}
+        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mt-1 sm:mt-2 leading-tight tracking-wide px-4"
+        style={{ textShadow: '0 0 60px rgba(26,49,91,0.8)' }}
       >
         Al-Amir
         <br />
-        <span className="text-yellow-400">Islamic Center</span>
+        <span className="gold-text">Islamic Center</span>
       </h1>
 
-      <p className="text-gray-300 mt-3 sm:mt-4 md:mt-5 text-xs sm:text-sm md:text-base lg:text-lg max-w-xl mx-auto leading-relaxed px-2">
-        Your home for worship, community & spiritual growth in{' '}
-        <span className="text-accent font-medium">Florida, USA</span>.
-        Join us for Salah, Jumu'ah & community events.
+      {/* Ornate divider */}
+      <div className="ornate-divider mt-4 sm:mt-5 mb-4 sm:mb-5 w-40 sm:w-52 mx-auto">
+        <span>✦</span>
+        <span className="text-xs opacity-50">◆</span>
+        <span>✦</span>
+      </div>
+
+      <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-lg mx-auto leading-relaxed px-4">
+        Your home for worship, community &amp; spiritual growth in{' '}
+        <span className="text-accent font-semibold">South Florida, USA</span>.
+        <br className="hidden sm:block" />
+        Join us for Salah, Jumu&apos;ah &amp; community events.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 justify-center mt-6 sm:mt-8 md:mt-10 w-full px-4">
+      {/* CTA Buttons */}
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-8 sm:mt-10 w-full px-6 max-w-sm sm:max-w-none mx-auto">
         <a
           href="#prayer-times"
-          className="px-8 sm:px-10 md:px-12 py-2.5 sm:py-3 md:py-3.5 rounded-full font-semibold text-xs sm:text-sm text-white border border-blue-600 hover:bg-blue-900/40 transition-all duration-300 hover:scale-105 whitespace-nowrap"
+          className="group px-8 sm:px-10 py-3 sm:py-3.5 rounded-full font-semibold text-sm text-white border border-blue-500/50 hover:border-accent/60 hover:bg-blue-900/30 transition-all duration-300 hover:scale-105 hover:shadow-[0_4px_20px_rgba(201,168,76,0.2)] whitespace-nowrap flex items-center justify-center gap-2"
         >
-          🕌 Prayer Times
+          <span className="text-base">🕌</span> Prayer Times
         </a>
         <a
           href="#contact"
-          className="px-8 sm:px-10 md:px-12 py-2.5 sm:py-3 md:py-3.5 rounded-full font-semibold text-xs sm:text-sm text-black donate-btn whitespace-nowrap"
+          className="donate-btn px-8 sm:px-10 py-3 sm:py-3.5 rounded-full font-semibold text-sm text-black whitespace-nowrap flex items-center justify-center gap-2"
         >
-          Contact Us
+          <span className="text-base">✉️</span> Contact Us
         </a>
       </div>
 
-      <div className="mt-4 sm:mt-6 inline-flex flex-col sm:flex-row items-center gap-1 sm:gap-2 bg-blue-900/40 border border-blue-800/40 rounded-full px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 text-center">
-        <div className="w-2 h-2 rounded-full bg-accent pulse-ring relative flex-shrink-0">
-          <div className="absolute inset-0 rounded-full bg-accent" />
+      {/* Jumu'ah badge */}
+      <div className="mt-6 sm:mt-8 inline-flex flex-col sm:flex-row items-center gap-2 glass-card rounded-full px-5 sm:px-6 py-2.5 sm:py-3 text-center border border-accent/20">
+        <div className="relative flex-shrink-0">
+          <div className="w-2.5 h-2.5 rounded-full bg-accent pulse-ring absolute inset-0" />
+          <div className="w-2.5 h-2.5 rounded-full bg-accent relative z-10" />
         </div>
-        <span className="text-light text-xs sm:text-sm">
-          Jumu'ah Khutbah — <span className="text-accent font-semibold">Every Friday at 1:15 PM</span>
+        <span className="text-light text-xs sm:text-sm font-light">
+          Jumu&apos;ah Khutbah —{' '}
+          <span className="text-accent font-bold">Every Friday at 1:15 PM</span>
         </span>
       </div>
     </div>
@@ -94,18 +195,19 @@ function HeroContent() {
 
 function StarField() {
   const [stars, setStars] = React.useState<
-    Array<{ id: number; x: number; y: number; size: number; delay: number }>
+    Array<{ id: number; x: number; y: number; size: number; delay: number; brightness: number }>
   >([]);
 
   React.useEffect(() => {
-    const generatedStars = Array.from({ length: 40 }, (_, i) => ({
+    const generated = Array.from({ length: 65 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
-      y: Math.random() * 60,
-      size: Math.random() * 2.5 + 0.5,
-      delay: Math.random() * 3,
+      y: Math.random() * 65,
+      size: Math.random() * 2.8 + 0.4,
+      delay: Math.random() * 4,
+      brightness: Math.random() * 0.6 + 0.4,
     }));
-    setStars(generatedStars);
+    setStars(generated);
   }, []);
 
   return (
@@ -119,7 +221,9 @@ function StarField() {
             top: `${s.y}%`,
             width: s.size,
             height: s.size,
+            opacity: s.brightness,
             animationDelay: `${s.delay}s`,
+            animationDuration: `${2 + Math.random() * 2}s`,
           }}
         />
       ))}
@@ -128,24 +232,59 @@ function StarField() {
 }
 
 function Lanterns() {
+  const lanternData = [
+    { cls: 'lantern',   left: '8%',  height: 'h-10 sm:h-14' },
+    { cls: 'lantern-2', left: '48%', height: 'h-8  sm:h-12' },
+    { cls: 'lantern-3', left: '85%', height: 'h-10 sm:h-14' },
+  ];
+
   return (
-    <div className="absolute top-0 left-0 right-0 flex justify-between px-4 sm:px-6 md:px-8 pointer-events-none overflow-hidden">
-      {[
-        { cls: 'lantern', offset: '10%' },
-        { cls: 'lantern-2', offset: '50%' },
-        { cls: 'lantern-3', offset: '85%' },
-      ].map((l, i) => (
-        <div key={i} className={`absolute ${l.cls}`} style={{ left: l.offset, top: 0 }}>
-          <div className="w-0.5 h-8 sm:h-10 mx-auto" style={{ backgroundColor: '#ac9861', opacity: 0.6 }} />
+    <div className="absolute top-0 left-0 right-0 pointer-events-none overflow-hidden">
+      {lanternData.map((l, i) => (
+        <div key={i} className={`absolute top-0 ${l.cls}`} style={{ left: l.left }}>
+          {/* String */}
           <div
-            className="w-4 sm:w-6 h-6 sm:h-8 rounded-b-full opacity-80 mx-auto shadow-lg"
+            className={`w-px ${l.height} mx-auto`}
+            style={{ background: 'linear-gradient(to bottom, rgba(201,168,76,0.7), rgba(201,168,76,0.3))' }}
+          />
+          {/* Body */}
+          <div
+            className="w-5 sm:w-7 h-7 sm:h-9 rounded-b-full mx-auto"
             style={{
-              background: 'linear-gradient(to bottom, #ac9861, #8b7b5c)',
-              boxShadow: '0 0 15px rgba(172,152,97,0.7)',
+              background: 'linear-gradient(160deg, #e8c97a, #c9a84c, #9d7f34)',
+              boxShadow: '0 0 18px rgba(201,168,76,0.7), 0 0 40px rgba(201,168,76,0.25)',
             }}
+          />
+          {/* Glow on floor */}
+          <div
+            className="w-8 sm:w-10 h-2 rounded-full mx-auto mt-0.5 blur-sm"
+            style={{ background: 'radial-gradient(ellipse, rgba(201,168,76,0.35), transparent 80%)' }}
           />
         </div>
       ))}
+    </div>
+  );
+}
+
+/* Decorative geometric pattern in background */
+function GeometricBg() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.04]">
+      <svg viewBox="0 0 800 800" className="absolute -right-40 -top-40 w-2/3 max-w-2xl" fill="none">
+        <circle cx="400" cy="400" r="350" stroke="#c9a84c" strokeWidth="1" />
+        <circle cx="400" cy="400" r="280" stroke="#c9a84c" strokeWidth="1" />
+        <circle cx="400" cy="400" r="200" stroke="#c9a84c" strokeWidth="1" />
+        {[0,30,60,90,120,150,180,210,240,270,300,330].map((deg) => (
+          <line
+            key={deg}
+            x1={Math.round(400 + Math.cos(deg * Math.PI / 180) * 350)}
+            y1={Math.round(400 + Math.sin(deg * Math.PI / 180) * 350)}
+            x2={Math.round(400 + Math.cos((deg + 180) * Math.PI / 180) * 350)}
+            y2={Math.round(400 + Math.sin((deg + 180) * Math.PI / 180) * 350)}
+            stroke="#c9a84c" strokeWidth="0.6"
+          />
+        ))}
+      </svg>
     </div>
   );
 }
@@ -154,18 +293,23 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative w-full min-h-screen gradient-animate flex flex-col items-center justify-center overflow-hidden px-3 sm:px-4"
+      className="relative w-full min-h-screen gradient-animate flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6"
     >
       <StarField />
+      <GeometricBg />
       <Lanterns />
       <HeroContent />
 
-      <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-50 animate-bounce">
-        <div className="w-5 h-8 border-2 border-green-500 rounded-full flex justify-center pt-1">
-          <div className="w-1 h-2 bg-green-400 rounded-full" />
+      {/* Scroll indicator */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-60 animate-bounce">
+        <div className="w-5 h-8 border-2 border-accent/60 rounded-full flex justify-center pt-1.5">
+          <div className="w-1 h-2.5 bg-accent rounded-full" />
         </div>
-        <span className="text-green-500 text-xs">Scroll</span>
+        <span className="text-accent text-xs tracking-widest font-light">SCROLL</span>
       </div>
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0b1422] to-transparent pointer-events-none" />
     </section>
   );
 }

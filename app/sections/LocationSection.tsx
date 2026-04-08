@@ -1,59 +1,118 @@
 'use client';
-import { SectionContainer, SectionHeader, Card } from '@/app/components/ui';
+import { SectionContainer, SectionHeader } from '@/app/components/ui';
+import { useScrollReveal } from '@/app/hooks';
+
+const contactItems = [
+  {
+    icon: '🏠',
+    label: 'Address',
+    value: 'Al-Amir Islamic Center\nFlorida, USA\n(Full address to be confirmed)',
+    highlight: false,
+  },
+  {
+    icon: '📞',
+    label: 'Phone',
+    value: '+1 (305) 000-0000',
+    href: 'tel:+13050000000',
+    highlight: false,
+  },
+  {
+    icon: '📧',
+    label: 'Email',
+    value: 'info@alamirislamiccenter.org',
+    href: 'mailto:info@alamirislamiccenter.org',
+    highlight: false,
+  },
+  {
+    icon: '🕌',
+    label: "Jumu'ah",
+    value: "Every Friday\nKhutbah: 1:00 PM · Iqamah: 1:15 PM",
+    highlight: true,
+  },
+  {
+    icon: '⏰',
+    label: 'Hours',
+    value: 'Open daily for all 5 prayers\nDoors open 15 min before each Salah',
+    highlight: false,
+  },
+];
 
 export default function LocationSection() {
-  const locations = [
-    { icon: '🏠', label: 'Address', value: 'Al-Amir Islamic Center\nFlorida, USA\n(Full address to be confirmed)' },
-    { icon: '📞', label: 'Phone', value: '+1 (305) 000-0000' },
-    { icon: '📧', label: 'Email', value: 'info@alamirislamiccenter.org' },
-    { icon: '🕌', label: 'Jumu\'ah', value: 'Every Friday\nKhutbah: 1:00 PM · Iqamah: 1:15 PM' },
-    { icon: '⏰', label: 'Open', value: 'Daily — Open for all 5 prayers' },
-  ];
+  const { ref, visible } = useScrollReveal();
 
   return (
     <SectionContainer id="location" py="large" bg="dark">
       <SectionHeader
         icon="📍"
         title={<>Find <span className="text-accent">Us</span></>}
-        description="Al-Amir Islamic Center — Florida, USA"
+        description="Al-Amir Islamic Center — Your masjid in South Florida, open daily for the entire community"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-start">
-        <div className="rounded-lg md:rounded-2xl overflow-hidden border border-blue-800/40 w-full" style={{ height: '300px' }}>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57258.9!2d-80.3!3d25.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b9d8c2b90bcb%3A0x1!2sFlorida%2C+USA!5e0!3m2!1sen!2sus!4v1234567890"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Al-Amir Islamic Center Location"
-          />
-        </div>
+      <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-start">
 
-        <div className="space-y-3 md:space-y-4">
-          {locations.map((item) => (
-            <Card
-              key={item.label}
-              icon={item.icon}
-              className="p-4 md:p-5 hover:-translate-y-0.5"
-            >
-              <div className="text-yellow-400 text-xs font-semibold uppercase tracking-wider mb-1">
-                {item.label}
-              </div>
-              <div className="text-gray-300 text-xs md:text-sm whitespace-pre-line">{item.value}</div>
-            </Card>
-          ))}
+        {/* Map */}
+        <div className={`reveal-left ${visible ? 'visible' : ''}`}>
+          <div
+            className="rounded-2xl md:rounded-3xl overflow-hidden border border-accent/15 shadow-[0_10px_50px_rgba(0,0,0,0.4)]"
+            style={{ height: '340px' }}
+          >
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57258.9!2d-80.3!3d25.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b9d8c2b90bcb%3A0x1!2sFlorida%2C+USA!5e0!3m2!1sen!2sus!4v1234567890"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: 'hue-rotate(200deg) saturate(0.8) brightness(0.75)' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Al-Amir Islamic Center Location"
+            />
+          </div>
 
           <a
             href="https://maps.google.com/?q=Al-Amir+Islamic+Center+Florida"
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full text-center py-2.5 md:py-3 rounded-lg md:rounded-xl border border-blue-600 text-accent hover:bg-blue-900/30 transition-all hover:scale-[1.02] text-xs md:text-sm font-medium mt-2"
+            className="mt-4 flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-accent/30 text-accent hover:bg-accent/10 hover:border-accent/60 transition-all duration-300 hover:scale-[1.02] text-sm font-medium hover:shadow-[0_4px_20px_rgba(201,168,76,0.2)]"
           >
-            📍 Open in Google Maps
+            <span>📍</span> Open in Google Maps
           </a>
+        </div>
+
+        {/* Contact info */}
+        <div className={`reveal-right ${visible ? 'visible' : ''} space-y-3 sm:space-y-4`}>
+          {contactItems.map((item, i) => (
+            <div
+              key={item.label}
+              className={`
+                gold-hover-card rounded-xl sm:rounded-2xl p-4 sm:p-5
+                bg-gradient-to-br from-blue-950/40 to-black/40
+                backdrop-blur-sm
+                ${item.highlight ? 'border-accent/35 bg-accent/5' : ''}
+                reveal reveal-delay-${Math.min(i + 1, 6)} ${visible ? 'visible' : ''}
+              `}
+            >
+              <div className="flex items-start gap-3 sm:gap-4">
+                <span className="text-xl sm:text-2xl flex-shrink-0 mt-0.5">{item.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <div className={`text-xs font-bold uppercase tracking-widest mb-1 ${item.highlight ? 'text-accent' : 'text-yellow-400/80'}`}>
+                    {item.label}
+                  </div>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="text-gray-300 text-sm sm:text-base hover:text-accent transition-colors whitespace-pre-line block"
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <div className="text-gray-300 text-sm sm:text-base whitespace-pre-line leading-relaxed">
+                      {item.value}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </SectionContainer>

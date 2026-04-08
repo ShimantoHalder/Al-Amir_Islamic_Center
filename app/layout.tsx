@@ -1,5 +1,27 @@
 import type { Metadata, Viewport } from 'next';
+import { Cinzel, Raleway, Amiri } from 'next/font/google';
 import './globals.css';
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  variable: '--font-cinzel',
+  display: 'swap',
+  weight: ['400', '600', '700', '900'],
+});
+
+const raleway = Raleway({
+  subsets: ['latin'],
+  variable: '--font-raleway',
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700'],
+});
+
+const amiri = Amiri({
+  subsets: ['arabic', 'latin'],
+  variable: '--font-amiri',
+  display: 'swap',
+  weight: ['400', '700'],
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -11,15 +33,15 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Al-Amir Islamic Center | Florida, USA - Masjid, Prayer Times & Community',
-  description: 'Al-Amir Islamic Center in Florida - Your home for worship, prayer times, Islamic education, community events, and spiritual growth. Join us for Salah, Jumu\'ah, and community services.',
-  keywords: 'Islamic Center, Masjid, Mosque, Florida, Prayer Times, Muslim community, Islam, Quran, Islamic education, South Florida',
+  description:
+    "Al-Amir Islamic Center in Florida — Your home for worship, prayer times, Islamic education, community events, and spiritual growth. Join us for Salah, Jumu'ah, and community services.",
+  keywords:
+    'Islamic Center, Masjid, Mosque, Florida, Prayer Times, Muslim community, Islam, Quran, Islamic education, South Florida',
   authors: [{ name: 'Al-Amir Islamic Center' }],
   creator: 'Al-Amir Islamic Center',
   publisher: 'Al-Amir Islamic Center',
   metadataBase: new URL('https://alamirislamiccenter.org'),
-  alternates: {
-    canonical: 'https://alamirislamiccenter.org',
-  },
+  alternates: { canonical: 'https://alamirislamiccenter.org' },
   openGraph: {
     title: 'Al-Amir Islamic Center | Florida, USA',
     description: 'Your home for worship, prayer times, community events, and spiritual growth in South Florida',
@@ -27,14 +49,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://alamirislamiccenter.org',
     siteName: 'Al-Amir Islamic Center',
-    images: [
-      {
-        url: 'https://alamirislamiccenter.org/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Al-Amir Islamic Center',
-      },
-    ],
+    images: [{ url: 'https://alamirislamiccenter.org/og-image.jpg', width: 1200, height: 630, alt: 'Al-Amir Islamic Center' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -54,7 +69,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${cinzel.variable} ${raleway.variable} ${amiri.variable}`}>
       <body className="w-full overflow-x-hidden">{children}</body>
     </html>
   );
