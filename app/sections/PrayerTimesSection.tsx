@@ -159,7 +159,7 @@ export default function PrayerTimesSection() {
 
       {/* Next prayer countdown banner */}
       {!loading && nextInfo && (
-        <div className="mb-6 sm:mb-8 glass-card rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 border border-accent/20">
+        <div className="mb-8 sm:mb-10 glass-card rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-3 border border-accent/20">
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 rounded-full bg-accent relative flex-shrink-0">
               <div className="absolute inset-0 rounded-full bg-accent pulse-ring" />

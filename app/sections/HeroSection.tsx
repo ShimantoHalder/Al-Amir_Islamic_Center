@@ -163,16 +163,16 @@ function HeroContent() {
       </p>
 
       {/* CTA Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-8 sm:mt-10 w-full px-6 max-w-sm sm:max-w-none mx-auto">
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10 sm:mt-12 w-full px-6 max-w-sm sm:max-w-none mx-auto">
         <a
           href="#prayer-times"
-          className="group px-8 sm:px-10 py-3 sm:py-3.5 rounded-full font-semibold text-sm text-white border border-blue-500/50 hover:border-accent/60 hover:bg-blue-900/30 transition-all duration-300 hover:scale-105 hover:shadow-[0_4px_20px_rgba(201,168,76,0.2)] whitespace-nowrap flex items-center justify-center gap-2"
+          className="group px-12 sm:px-16 md:px-20 py-3.5 sm:py-4 rounded-full font-semibold text-sm sm:text-base text-white border border-blue-500/50 hover:border-accent/60 hover:bg-blue-900/30 transition-all duration-300 hover:scale-105 hover:shadow-[0_4px_20px_rgba(201,168,76,0.2)] whitespace-nowrap flex items-center justify-center gap-2.5"
         >
           <span className="text-base">🕌</span> Prayer Times
         </a>
         <a
           href="#contact"
-          className="donate-btn px-8 sm:px-10 py-3 sm:py-3.5 rounded-full font-semibold text-sm text-black whitespace-nowrap flex items-center justify-center gap-2"
+          className="donate-btn px-12 sm:px-16 md:px-20 py-3.5 sm:py-4 rounded-full font-semibold text-sm sm:text-base text-black whitespace-nowrap flex items-center justify-center gap-2.5"
         >
           <span className="text-base">✉️</span> Contact Us
         </a>

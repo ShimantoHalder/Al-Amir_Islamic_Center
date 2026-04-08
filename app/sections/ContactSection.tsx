@@ -75,7 +75,7 @@ export default function ContactSection() {
         >
           <form
             onSubmit={handleSubmit}
-            className="rounded-2xl md:rounded-3xl border border-blue-800/30 bg-gradient-to-br from-blue-950/30 to-black/30 backdrop-blur-md p-6 sm:p-8 md:p-10 space-y-5 sm:space-y-6 shadow-[0_20px_80px_rgba(0,0,0,0.4)]"
+            className="rounded-2xl md:rounded-3xl border border-blue-800/30 bg-gradient-to-br from-blue-950/30 to-black/30 backdrop-blur-md p-7 sm:p-10 md:p-12 space-y-6 sm:space-y-7 shadow-[0_20px_80px_rgba(0,0,0,0.4)]"
           >
             {/* Name + Email row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
@@ -157,7 +157,7 @@ export default function ContactSection() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="w-full py-3.5 sm:py-4 px-6 rounded-xl bg-gradient-to-r from-accent to-gold-dark hover:from-gold-light hover:to-accent disabled:from-gray-600 disabled:to-gray-700 text-black font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 hover:scale-[1.02] hover:shadow-[0_6px_24px_rgba(201,168,76,0.4)] disabled:cursor-not-allowed disabled:scale-100"
+              className="w-full py-4 sm:py-5 px-10 sm:px-14 rounded-xl bg-gradient-to-r from-accent to-gold-dark hover:from-gold-light hover:to-accent disabled:from-gray-600 disabled:to-gray-700 text-black font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 hover:scale-[1.02] hover:shadow-[0_6px_24px_rgba(201,168,76,0.4)] disabled:cursor-not-allowed disabled:scale-100"
               style={{ color: '#0b1422' }}
             >
               {status === 'loading' ? (
@@ -195,7 +195,7 @@ export default function ContactSection() {
           </form>
 
           {/* Quick contact info below form */}
-          <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
             {[
               { icon: '📞', label: 'Call Us',   value: '+1 (305) 000-0000' },
               { icon: '📧', label: 'Email Us',  value: 'info@alamirislamiccenter.org' },

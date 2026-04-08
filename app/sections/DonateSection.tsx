@@ -115,7 +115,7 @@ export default function DonateSection() {
         </p>
 
         {/* Donation tiers */}
-        <div className={`reveal reveal-delay-3 ${visible ? 'visible' : ''} grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-8 sm:mb-10`}>
+        <div className={`reveal reveal-delay-3 ${visible ? 'visible' : ''} grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 mb-10 sm:mb-12`}>
           {tiers.map((t) => (
             <div
               key={t.label}
@@ -132,7 +132,7 @@ export default function DonateSection() {
         {/* CTA Button */}
         <button
           onClick={handleDonate}
-          className={`donate-btn reveal reveal-delay-4 ${visible ? 'visible' : ''} text-black font-bold text-sm sm:text-base md:text-lg px-10 sm:px-14 py-3.5 sm:py-4 rounded-full inline-flex items-center gap-3 cursor-pointer shadow-[0_4px_24px_rgba(201,168,76,0.3)]`}
+          className={`donate-btn reveal reveal-delay-4 ${visible ? 'visible' : ''} text-black font-bold text-sm sm:text-base md:text-lg px-14 sm:px-20 md:px-24 py-4 sm:py-5 rounded-full inline-flex items-center gap-3 cursor-pointer shadow-[0_4px_24px_rgba(201,168,76,0.3)]`}
         >
           <span className="text-xl">🤲</span>
           Donate Now — For the Sake of Allah

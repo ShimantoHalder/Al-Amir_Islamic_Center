@@ -48,7 +48,7 @@ export default function LocationSection() {
         description="Al-Amir Islamic Center — Your masjid in South Florida, open daily for the entire community"
       />
 
-      <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-start">
+      <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-14 items-start">
 
         {/* Map */}
         <div className={`reveal-left ${visible ? 'visible' : ''}`}>
@@ -72,7 +72,7 @@ export default function LocationSection() {
             href="https://maps.google.com/?q=Al-Amir+Islamic+Center+Florida"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-accent/30 text-accent hover:bg-accent/10 hover:border-accent/60 transition-all duration-300 hover:scale-[1.02] text-sm font-medium hover:shadow-[0_4px_20px_rgba(201,168,76,0.2)]"
+            className="mt-5 flex items-center justify-center gap-2.5 w-full py-4 px-10 rounded-xl border border-accent/30 text-accent hover:bg-accent/10 hover:border-accent/60 transition-all duration-300 hover:scale-[1.02] text-sm sm:text-base font-medium hover:shadow-[0_4px_20px_rgba(201,168,76,0.2)]"
           >
             <span>📍</span> Open in Google Maps
           </a>

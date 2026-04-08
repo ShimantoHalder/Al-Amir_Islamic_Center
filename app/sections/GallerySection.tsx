@@ -57,7 +57,7 @@ export default function GallerySection() {
 
       <div
         ref={ref}
-        className={`reveal ${visible ? 'visible' : ''} relative w-full rounded-2xl md:rounded-3xl overflow-hidden border border-accent/15 shadow-[0_20px_80px_rgba(0,0,0,0.5)] mb-8 sm:mb-10`}
+        className={`reveal ${visible ? 'visible' : ''} relative w-full rounded-2xl md:rounded-3xl overflow-hidden border border-accent/15 shadow-[0_20px_80px_rgba(0,0,0,0.5)] mb-10 sm:mb-12`}
         onMouseEnter={() => setIsAutoPlay(false)}
         onMouseLeave={() => setIsAutoPlay(true)}
       >

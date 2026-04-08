@@ -18,9 +18,9 @@ export function SectionContainer({
   pattern = false,
 }: SectionContainerProps) {
   const pyClasses = {
-    small:  'py-10 sm:py-14 md:py-16',
-    medium: 'py-14 sm:py-20 md:py-24 lg:py-28',
-    large:  'py-16 sm:py-22 md:py-28 lg:py-36',
+    small:  'py-12 sm:py-16 md:py-20',
+    medium: 'py-16 sm:py-24 md:py-28 lg:py-32',
+    large:  'py-20 sm:py-28 md:py-32 lg:py-40',
   };
 
   const bgClasses = {

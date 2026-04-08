@@ -119,7 +119,7 @@ export default function AboutSection() {
       {/* Mission + Visual */}
       <div
         ref={cardRef}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-stretch mb-10 sm:mb-14"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-14 items-stretch mb-12 sm:mb-16 md:mb-20"
       >
         {/* Mission card */}
         <div className={`reveal-left ${cardVisible ? 'visible' : ''}`}>
@@ -166,7 +166,7 @@ export default function AboutSection() {
       {/* Value cards */}
       <div
         ref={valueRef}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
       >
         {values.map((v, i) => (
           <Card

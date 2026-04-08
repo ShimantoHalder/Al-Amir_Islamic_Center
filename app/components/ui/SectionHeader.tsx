@@ -9,7 +9,7 @@ interface SectionHeaderProps {
 
 export function SectionHeader({ icon, title, subtitle, description }: SectionHeaderProps) {
   return (
-    <div className="text-center mb-10 sm:mb-14 md:mb-16">
+    <div className="text-center mb-12 sm:mb-16 md:mb-20">
       {icon && (
         <span className="inline-block text-4xl sm:text-5xl mb-3 sm:mb-4 crescent">{icon}</span>
       )}
