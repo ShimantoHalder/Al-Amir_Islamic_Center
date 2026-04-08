@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useScrolled } from '@/app/hooks';
 
 const links = [
   { href: '#home', label: 'Home' },
@@ -11,13 +12,15 @@ const links = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const scrolled = useScrolled(40);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handler);
-    return () => window.removeEventListener('scroll', handler);
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
   }, []);
 
   return (
@@ -26,12 +29,12 @@ export default function Navbar() {
         scrolled ? 'nav-blur shadow-lg' : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 flex items-center justify-between h-14 md:h-16">
+      <div className="max-w-full mx-auto px-3 sm:px-4 md:px-6 flex items-center justify-between h-12 sm:h-14 md:h-16">
         {/* Logo */}
         <a href="#home" className="flex items-center gap-2 group flex-shrink-0">
-          <span className="text-xl md:text-2xl crescent">☪</span>
+          <span className="text-lg sm:text-xl md:text-2xl crescent">☪</span>
           <div className="hidden sm:block">
-          <div className="text-white font-bold text-xs md:text-sm leading-tight group-hover:text-accent transition-colors">
+            <div className="text-white font-bold text-xs md:text-sm leading-tight group-hover:text-accent transition-colors">
               Al-Amir Islamic Center
             </div>
             <div className="text-accent text-xs">Florida, USA</div>
@@ -39,7 +42,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-4 lg:gap-6">
+        <div className="hidden md:flex items-center gap-3 lg:gap-6">
           {links.map((l) => (
             <a
               key={l.href}
@@ -52,17 +55,14 @@ export default function Navbar() {
           ))}
           <a
             href="#donate"
-            className="donate-btn text-black font-bold text-xs lg:text-sm px-3 lg:px-4 py-2 rounded-full cursor-pointer"
+            className="donate-btn text-black font-bold text-xs lg:text-sm px-3 lg:px-4 py-1.5 lg:py-2 rounded-full cursor-pointer"
           >
             Donate
           </a>
         </div>
 
         {/* Mobile toggle */}
-        <button
-          className="md:hidden text-white p-2"
-          onClick={() => setOpen(!open)}
-        >
+        <button className="md:hidden text-white p-1" onClick={() => setOpen(!open)}>
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
@@ -70,13 +70,13 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden nav-blur border-t border-accent-dark">
-          <div className="flex flex-col px-4 py-3 gap-2">
+          <div className="flex flex-col px-3 sm:px-4 py-2 gap-1">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-gray-300 hover:text-accent text-xs sm:text-sm py-1 transition-colors"
+                className="text-gray-300 hover:text-accent text-xs sm:text-sm py-2 px-2 transition-colors rounded hover:bg-blue-900/20"
               >
                 {l.label}
               </a>

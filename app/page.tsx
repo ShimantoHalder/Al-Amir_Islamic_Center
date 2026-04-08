@@ -1,25 +1,25 @@
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import PrayerTimes from './components/PrayerTimes';
-import About from './components/About';
-import Gallery from './components/Gallery';
-import Location from './components/Location';
-import Donate from './components/Donate';
-import ContactForm from './components/ContactForm';
-import Footer from './components/Footer';
+import HeroSection from './sections/HeroSection';
+import PrayerTimesSection from './sections/PrayerTimesSection';
+import AboutSection from './sections/AboutSection';
+import GallerySection from './sections/GallerySection';
+import LocationSection from './sections/LocationSection';
+import DonateSection from './sections/DonateSection';
+import ContactSection from './sections/ContactSection';
+import FooterSection from './sections/FooterSection';
 
 export default function Home() {
   return (
     <main className="w-full overflow-x-hidden">
       <Navbar />
-      <Hero />
-      <PrayerTimes />
-      <About />
-      <Gallery />
-      <Location />
-      <Donate />
-      <ContactForm />
-      <Footer />
+      <HeroSection />
+      <PrayerTimesSection />
+      <AboutSection />
+      <GallerySection />
+      <LocationSection />
+      <DonateSection />
+      <ContactSection />
+      <FooterSection />
     </main>
   );
 }
