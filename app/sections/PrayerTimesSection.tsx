@@ -159,51 +159,55 @@ export default function PrayerTimesSection() {
 
       {/* Next prayer countdown banner */}
       {!loading && nextInfo && (
-        <div className="mb-8 sm:mb-10 glass-card rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-3 border border-accent/20">
+        <div className="mb-6 sm:mb-8 glass-card rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-3 border border-accent/20">
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 rounded-full bg-accent relative flex-shrink-0">
               <div className="absolute inset-0 rounded-full bg-accent pulse-ring" />
             </div>
-            <span className="text-gray-300 text-sm">
+            <span className="text-gray-300 text-sm sm:text-base">
               Next prayer: <span className="text-white font-bold">{nextInfo.name}</span>
             </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-xs text-gray-500 uppercase tracking-widest">In</span>
-            <span className="text-accent font-bold text-xl sm:text-2xl font-mono">{nextInfo.countdown}</span>
+            <span className="text-accent font-bold text-2xl sm:text-3xl font-mono">{nextInfo.countdown}</span>
           </div>
         </div>
       )}
 
-      {/* Prayer cards - 5 Main Prayers */}
+      {/* Prayer cards — 5 main prayers */}
       {loading ? (
-        <div className="flex justify-center items-center py-20 md:py-24">
-          <div className="w-12 h-12 border-3 border-accent border-t-transparent rounded-full animate-spin" />
-          <span className="ml-6 text-accent text-base font-medium">Fetching prayer times for Miami...</span>
+        <div className="flex justify-center items-center py-16">
+          <div className="w-10 h-10 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+          <span className="ml-5 text-accent text-sm font-medium">Fetching prayer times for Miami...</span>
         </div>
       ) : prayers.length > 0 ? (
         <div
           ref={ref}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4 lg:gap-5 mb-12 sm:mb-14 md:mb-16 w-full"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8 sm:mb-10 w-full"
         >
           {prayers.filter((prayer) => prayer.name !== 'Sunrise').map((prayer, i) => (
             <div
               key={prayer.name}
-              className={`prayer-card rounded-xl sm:rounded-2xl md:rounded-2xl lg:rounded-3xl text-center p-3 sm:p-4 md:p-5 ${
+              className={`prayer-card rounded-xl sm:rounded-2xl text-center p-4 sm:p-5 flex flex-col items-center ${
                 active === prayer.name ? 'active-prayer' : ''
               } reveal reveal-delay-${Math.min(i + 1, 5)} ${visible ? 'visible' : ''}`}
             >
-              <div className="text-xl sm:text-2xl md:text-3xl mb-1.5 sm:mb-2 md:mb-3 leading-none">{prayer.icon}</div>
-              <div className="font-arabic text-gray-500 text-xs mb-0.5 leading-none">{prayer.arabic}</div>
-              <div className={`font-bold text-xs sm:text-xs md:text-sm mb-1 tracking-wide ${active === prayer.name ? 'text-accent' : 'text-white'}`}>
+              {/* Icon */}
+              <div className="text-2xl sm:text-3xl mb-2 leading-none">{prayer.icon}</div>
+              {/* Arabic name — 12px gap from icon */}
+              <div className="font-arabic text-gray-500 text-xs sm:text-sm mb-1 leading-snug">{prayer.arabic}</div>
+              {/* English name */}
+              <div className={`font-bold text-sm sm:text-base mb-2 tracking-wide ${active === prayer.name ? 'text-accent' : 'text-white'}`}>
                 {prayer.name}
               </div>
-              <div className={`text-xs sm:text-sm md:text-base font-mono font-semibold ${active === prayer.name ? 'text-accent' : 'text-blue-300'}`}>
+              {/* Time — prominent */}
+              <div className={`text-base sm:text-lg font-mono font-bold leading-none ${active === prayer.name ? 'text-accent' : 'text-blue-200'}`}>
                 {prayer.time}
               </div>
               {active === prayer.name && (
-                <div className="mt-1 text-xs text-accent font-medium animate-pulse flex items-center justify-center gap-0.5">
-                  <span className="w-1 h-1 rounded-full bg-accent inline-block" />
+                <div className="mt-2 text-xs text-accent font-semibold animate-pulse flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
                   Now
                 </div>
               )}
@@ -211,14 +215,14 @@ export default function PrayerTimesSection() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 md:py-24">
-          <p className="text-accent text-lg font-medium">Prayer times for Miami, Florida</p>
-          <p className="text-gray-500 text-base mt-3">All times automatically updated</p>
+        <div className="text-center py-16">
+          <p className="text-accent text-base font-medium">Prayer times for Miami, Florida</p>
+          <p className="text-gray-500 text-sm mt-2">All times automatically updated</p>
         </div>
       )}
 
       {/* Jumu'ah banner */}
-      <div className="rounded-2xl md:rounded-3xl border border-accent/35 bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10 p-6 sm:p-7 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 shimmer-effect w-full">
+      <div className="rounded-2xl border border-accent/35 bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shimmer-effect w-full">
         <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
           <span className="text-3xl sm:text-4xl flex-shrink-0">🕋</span>
           <div>
