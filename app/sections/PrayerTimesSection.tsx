@@ -20,12 +20,24 @@ interface HijriDate {
 // ─── Florida / Eastern timezone helpers ──────────────────────────────────────
 
 /**
- * Returns a plain Date whose .getHours()/.getMinutes() equal the current
- * Eastern time (handles DST automatically via Intl).
+ * Returns { hours, minutes, seconds } in America/New_York timezone.
+ * Uses Intl.DateTimeFormat.formatToParts() which is reliable across all
+ * browsers and timezones — no fragile string-parse tricks.
  */
-function getEasternNow(): Date {
-  const str = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-  return new Date(str);
+function getEasternParts(): { hours: number; minutes: number; seconds: number } {
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false,
+  });
+  const parts = fmt.formatToParts(new Date());
+  const get = (type: string) =>
+    parseInt(parts.find((p) => p.type === type)?.value ?? '0', 10);
+  const h = get('hour');
+  // Intl returns 24 for midnight in some locales — normalise to 0
+  return { hours: h === 24 ? 0 : h, minutes: get('minute'), seconds: get('second') };
 }
 
 function getEasternDateString(): string {
@@ -40,8 +52,8 @@ function getEasternDateString(): string {
 
 /** Milliseconds until the next midnight in Eastern time (+500 ms buffer). */
 function msUntilMidnightEastern(): number {
-  const et      = getEasternNow();
-  const elapsed = (et.getHours() * 3600 + et.getMinutes() * 60 + et.getSeconds()) * 1000;
+  const { hours, minutes, seconds } = getEasternParts();
+  const elapsed = (hours * 3600 + minutes * 60 + seconds) * 1000;
   return 24 * 60 * 60 * 1000 - elapsed + 500;
 }
 
@@ -67,8 +79,8 @@ function fmt12(raw: string): string {
   let   h  = parseInt(hStr, 10);
   const m  = mStr ?? '00';
   const p  = h >= 12 ? 'PM' : 'AM';
-  if (h > 12)     h -= 12;
-  else if (h === 0) h = 12;
+  if (h > 12)       h -= 12;
+  else if (h === 0) h  = 12;
   return `${h}:${m} ${p}`;
 }
 
@@ -91,12 +103,19 @@ async function fetchPrayerTimes(): Promise<{
   fromAPI: boolean;
 }> {
   try {
-    // Use today's date in Eastern time (so it is always correct for Florida,
-    // even for visitors whose browser clock is in a different timezone).
-    const et    = getEasternNow();
-    const day   = et.getDate();
-    const month = et.getMonth() + 1;
-    const year  = et.getFullYear();
+    // Get today's date components in Eastern time using reliable Intl API
+    const dateFmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    });
+    const dateParts = dateFmt.formatToParts(new Date());
+    const getPart = (type: string) =>
+      parseInt(dateParts.find((p) => p.type === type)?.value ?? '1', 10);
+    const day   = getPart('day');
+    const month = getPart('month');
+    const year  = getPart('year');
 
     // Exact coordinates of Al-Amir Islamic Center (Jacksonville, FL)
     // Method 2 = ISNA (standard for North America)
@@ -133,8 +152,8 @@ async function fetchPrayerTimes(): Promise<{
 // ─── Active / next prayer (all comparisons in Eastern time) ──────────────────
 
 function getActive(prayers: PrayerTime[]): string {
-  const et         = getEasternNow();
-  const nowMinutes = et.getHours() * 60 + et.getMinutes();
+  const { hours, minutes } = getEasternParts();
+  const nowMinutes = hours * 60 + minutes;
   const salah      = prayers.filter((p) => p.name !== 'Sunrise');
   let   active     = salah[salah.length - 1]?.name ?? '';
   for (let i = salah.length - 1; i >= 0; i--) {
@@ -147,8 +166,8 @@ function getActive(prayers: PrayerTime[]): string {
 }
 
 function getNext(prayers: PrayerTime[]): { name: string; countdown: string } {
-  const et         = getEasternNow();
-  const nowMinutes = et.getHours() * 60 + et.getMinutes();
+  const { hours, minutes } = getEasternParts();
+  const nowMinutes = hours * 60 + minutes;
   const salah      = prayers.filter((p) => p.name !== 'Sunrise');
   for (const p of salah) {
     const diff = toMinutes(p.time24) - nowMinutes;
@@ -238,7 +257,7 @@ export default function PrayerTimesSection() {
               </p>
             )}
             <span className="text-gray-500 hidden sm:inline">·</span>
-            <p className="text-gray-500 text-xs">Jacksonville, FL · Eastern Time · Auto-updated daily</p>
+            <p className="text-gray-500 text-xs">Jacksonville, FL · Eastern Time (ET) · Auto-updated daily</p>
           </div>
         }
       />
@@ -275,52 +294,67 @@ export default function PrayerTimesSection() {
         </div>
       )}
 
-      {/* Prayer cards — 5 main prayers */}
-      {loading ? (
-        <div className="flex justify-center items-center py-16">
-          <div className="w-10 h-10 border-2 border-accent border-t-transparent rounded-full animate-spin" />
-          <span className="ml-5 text-accent text-sm font-medium">Fetching today&apos;s prayer times…</span>
-        </div>
-      ) : (
-        <div
-          ref={ref}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8 sm:mb-10 w-full"
-        >
-          {prayers.filter((p) => p.name !== 'Sunrise').map((prayer, i) => (
-            <div
-              key={prayer.name}
-              className={`prayer-card rounded-xl sm:rounded-2xl text-center p-4 sm:p-5 flex flex-col items-center ${
-                active === prayer.name ? 'active-prayer' : ''
-              } reveal reveal-delay-${Math.min(i + 1, 5)} ${visible ? 'visible' : ''}`}
-            >
-              {/* Icon */}
-              <div className="text-2xl sm:text-3xl mb-2 leading-none">{prayer.icon}</div>
-              {/* Arabic name */}
-              <div className="font-arabic text-gray-500 text-xs sm:text-sm mb-1 leading-snug">
-                {prayer.arabic}
-              </div>
-              {/* English name */}
-              <div className={`font-bold text-sm sm:text-base mb-2 tracking-wide ${
-                active === prayer.name ? 'text-accent' : 'text-white'
-              }`}>
-                {prayer.name}
-              </div>
-              {/* Time — most prominent element */}
-              <div className={`text-base sm:text-lg font-mono font-bold leading-none ${
-                active === prayer.name ? 'text-accent' : 'text-blue-200'
-              }`}>
-                {prayer.timeDisplay}
-              </div>
-              {active === prayer.name && (
-                <div className="mt-2 text-xs text-accent font-semibold animate-pulse flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
-                  Now
+      {/* All 6 time cards: Fajr · Sunrise · Dhuhr · Asr · Maghrib · Isha
+          ref is on this outer wrapper so IntersectionObserver attaches while
+          loading=true — prevents the cards from staying opacity:0 forever. */}
+      <div ref={ref} className="mb-8 sm:mb-10 w-full">
+        {loading ? (
+          <div className="flex justify-center items-center py-16">
+            <div className="w-10 h-10 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+            <span className="ml-5 text-accent text-sm font-medium">Fetching today&apos;s prayer times…</span>
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4 w-full">
+          {prayers.map((prayer, i) => {
+            const isSunrise = prayer.name === 'Sunrise';
+            const isActive  = active === prayer.name; // getActive() never returns Sunrise
+
+            return (
+              <div
+                key={prayer.name}
+                className={`prayer-card rounded-xl sm:rounded-2xl text-center p-3 sm:p-5 flex flex-col items-center justify-between ${
+                  isActive ? 'active-prayer' : ''
+                } reveal reveal-delay-${Math.min(i + 1, 6)} ${visible ? 'visible' : ''}`}
+              >
+                {/* Icon */}
+                <div className={`text-xl sm:text-3xl mb-1.5 sm:mb-2 leading-none ${isSunrise ? 'opacity-70' : ''}`}>
+                  {prayer.icon}
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+
+                {/* Arabic name */}
+                <div className={`font-arabic text-[10px] sm:text-sm mb-1 leading-snug ${
+                  isSunrise ? 'text-gray-600' : 'text-gray-500'
+                }`}>
+                  {prayer.arabic}
+                </div>
+
+                {/* English name */}
+                <div className={`font-bold text-[11px] sm:text-base mb-1.5 sm:mb-2 tracking-wide ${
+                  isActive ? 'text-accent' : isSunrise ? 'text-gray-400' : 'text-white'
+                }`}>
+                  {prayer.name}
+                </div>
+
+                {/* Time — most prominent element */}
+                <div className={`text-xs sm:text-lg font-mono font-bold leading-none ${
+                  isActive ? 'text-accent' : isSunrise ? 'text-gray-500' : 'text-blue-200'
+                }`}>
+                  {prayer.timeDisplay}
+                </div>
+
+                {/* "Now" badge — only for active salah, never Sunrise */}
+                {isActive && (
+                  <div className="mt-1.5 sm:mt-2 text-[10px] sm:text-xs text-accent font-semibold animate-pulse flex items-center gap-0.5 sm:gap-1">
+                    <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-accent inline-block" />
+                    Now
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          </div>
+        )}
+      </div>
 
       {/* Jumu'ah banner */}
       <div className="rounded-2xl border border-accent/35 bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shimmer-effect w-full">

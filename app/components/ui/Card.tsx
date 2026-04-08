@@ -16,7 +16,7 @@ export function Card({ icon, title, children, className = '', interactive = fals
         border border-accent/12
         bg-gradient-to-br from-blue-950/40 to-black/40
         backdrop-blur-md
-        p-5 sm:p-6
+        p-6
         transition-all duration-300
         ${interactive
           ? 'hover:border-accent/45 hover:shadow-[0_12px_40px_rgba(201,168,76,0.15)] hover:-translate-y-1.5 cursor-pointer'

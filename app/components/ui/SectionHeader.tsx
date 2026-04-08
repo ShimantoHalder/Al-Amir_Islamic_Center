@@ -9,9 +9,9 @@ interface SectionHeaderProps {
 
 export function SectionHeader({ icon, title, subtitle, description }: SectionHeaderProps) {
   return (
-    <div className="text-center mb-10 sm:mb-12 md:mb-14">
-      {/* Icon — 12-16px gap to heading */}
-      <span className="inline-block text-4xl sm:text-5xl mb-3 sm:mb-4 leading-none">
+    <div className="flex flex-col items-center text-center mb-8 sm:mb-10 w-full">
+      {/* Icon */}
+      <span className="text-4xl sm:text-5xl mb-3 leading-none">
         {icon}
       </span>
 
@@ -20,15 +20,17 @@ export function SectionHeader({ icon, title, subtitle, description }: SectionHea
         {title}
       </h2>
 
-      {/* Subtitle — 12-16px below heading */}
-      {subtitle && <div className="mt-3 sm:mt-4">{subtitle}</div>}
+      {/* Subtitle */}
+      {subtitle && (
+        <div className="mt-3 w-full flex flex-col items-center">{subtitle}</div>
+      )}
 
-      {/* Ornate divider — 12-16px gap each side */}
-      <div className="section-divider mx-auto mt-4 mb-5 sm:mb-6" />
+      {/* Gold divider */}
+      <div className="section-divider mt-4 mb-4" />
 
-      {/* Description — 12px gap from divider */}
+      {/* Description */}
       {description && (
-        <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+        <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-2xl text-center">
           {description}
         </p>
       )}

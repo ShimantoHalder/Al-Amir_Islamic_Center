@@ -91,15 +91,15 @@ function AnimatedStat({ num, label }: { num: string; label: string }) {
   }, []);
 
   return (
-    <div ref={ref} className="text-center">
+    <div ref={ref} className="text-center py-2">
       <div
-        className={`text-accent font-bold text-xl sm:text-2xl md:text-3xl transition-all duration-700 ${
+        className={`text-accent font-bold text-2xl sm:text-3xl leading-none transition-all duration-700 ${
           show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}
       >
         {num}
       </div>
-      <div className="text-gray-500 text-xs mt-1 tracking-wide uppercase">{label}</div>
+      <div className="text-gray-500 text-[11px] sm:text-xs mt-1.5 tracking-wide uppercase leading-tight">{label}</div>
     </div>
   );
 }
@@ -144,8 +144,8 @@ export default function AboutSection() {
               </p>
             </div>
 
-            {/* Stats — evenly distributed, equal column widths */}
-            <div className="border-t border-blue-800/30 pt-5 grid grid-cols-4 gap-3">
+            {/* Stats — 2-col on mobile, 4-col on sm+ for readability */}
+            <div className="border-t border-blue-800/30 pt-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
               {stats.map((s) => (
                 <AnimatedStat key={s.label} num={s.num} label={s.label} />
               ))}
@@ -166,10 +166,10 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {/* Value cards — equal height, consistent 24px gap */}
+      {/* Value cards — equal height via items-stretch, consistent 24px gap */}
       <div
         ref={valueRef}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch"
       >
         {values.map((v, i) => (
           <Card

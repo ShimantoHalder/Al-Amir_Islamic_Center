@@ -129,20 +129,20 @@ function HeroContent() {
       >
         بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
       </div>
-      <p className="text-accent text-xs sm:text-sm tracking-widest mb-6 sm:mb-8 opacity-75 font-light">
+      <p className="text-accent text-xs sm:text-sm tracking-widest mb-5 sm:mb-7 opacity-75 font-light">
         In the name of Allah, the Most Gracious, the Most Merciful
       </p>
 
-      {/* Mosque illustration */}
-      <div className="w-full mb-6 sm:mb-8 flex justify-center">
-        <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
+      {/* Mosque illustration — balanced max-width with generous vertical gap */}
+      <div className="w-full mb-5 sm:mb-7 flex justify-center">
+        <div className="w-full max-w-[260px] sm:max-w-sm md:max-w-md">
           <MosqueSVG />
         </div>
       </div>
 
-      {/* Main title — H1: 40-48px base, scales up */}
+      {/* Main title — hero intentionally larger than spec H1 for visual impact */}
       <h1
-        className="text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-tight tracking-wide px-4"
+        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-wide px-4"
         style={{ textShadow: '0 0 60px rgba(26,49,91,0.8)' }}
       >
         Al-Amir
@@ -150,23 +150,23 @@ function HeroContent() {
         <span className="gold-text">Islamic Center</span>
       </h1>
 
-      {/* Ornate divider — 16px gap each side */}
-      <div className="ornate-divider mt-5 mb-5 w-40 sm:w-52 mx-auto">
+      {/* Ornate divider */}
+      <div className="ornate-divider mt-4 mb-4 w-40 sm:w-52 mx-auto">
         <span>✦</span>
         <span className="text-xs opacity-50">◆</span>
         <span>✦</span>
       </div>
 
-      {/* Subtitle — body text 16px, max-width for readability */}
-      <p className="text-base sm:text-lg text-gray-300 max-w-xl mx-auto leading-relaxed px-4 sm:px-6">
+      {/* Subtitle — body text, constrained line length for readability */}
+      <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-lg mx-auto leading-relaxed px-4 sm:px-6">
         Your home for worship, community &amp; spiritual growth in{' '}
         <span className="text-accent font-semibold">South Florida, USA</span>.
         <br className="hidden sm:block" />
         Join us for Salah, Jumu&apos;ah &amp; community events.
       </p>
 
-      {/* CTA Buttons — 12-16px gap, standard 12px 24px padding */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mt-8 sm:mt-10 w-full px-4 max-w-sm sm:max-w-none mx-auto">
+      {/* CTA Buttons — consistent gap, btn-base ensures uniform size */}
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mt-7 sm:mt-9 w-full px-4 max-w-xs sm:max-w-none mx-auto">
         <a
           href="#prayer-times"
           className="btn-base btn-secondary w-full sm:w-auto"
@@ -181,8 +181,8 @@ function HeroContent() {
         </a>
       </div>
 
-      {/* Jumu'ah badge — 32-40px gap from buttons */}
-      <div className="mt-8 sm:mt-10 inline-flex flex-col sm:flex-row items-center gap-3 glass-card rounded-full px-6 py-3 text-center border border-accent/20">
+      {/* Jumu'ah live badge */}
+      <div className="mt-7 sm:mt-9 inline-flex flex-col sm:flex-row items-center gap-3 glass-card rounded-full px-5 sm:px-6 py-3 text-center border border-accent/20">
         <div className="relative flex-shrink-0 w-3 h-3">
           <div className="w-full h-full rounded-full bg-accent pulse-ring absolute inset-0" />
           <div className="w-full h-full rounded-full bg-accent relative z-10" />

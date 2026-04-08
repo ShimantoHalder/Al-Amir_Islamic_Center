@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════
+   TAILWIND v4 THEME — registers `accent` as a
+   first-class color so opacity modifiers work:
+   text-accent/70, bg-accent/10, border-accent/20,
+   from-accent/10, via-accent/5, to-accent/10 …
+═══════════════════════════════════════════════ */
+@theme {
+  --color-accent:     #c9a84c;
+  --color-gold-light: #e8c97a;
+  --color-gold-dark:  #9d7f34;
+}
+
 :root {
   --primary-dark: #1A315B;
   --primary-gold: #c9a84c;
@@ -78,6 +90,36 @@
 .border-accent-dark { border-color: rgba(201, 168, 76, 0.2); }
 .bg-accent-dark-transparent { background-color: rgba(201, 168, 76, 0.12); }
 
+/* Form submit button — gold gradient (used via inline style in ContactSection) */
+.form-submit-btn {
+  background: linear-gradient(135deg, var(--primary-gold) 0%, var(--gold-light) 50%, var(--primary-gold) 100%);
+  background-size: 200% 100%;
+  color: var(--dark);
+  font-weight: 700;
+  border-radius: 0.625rem;
+  min-height: 48px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  font-size: var(--body-sm);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+.form-submit-btn:hover:not(:disabled) {
+  background-position: right center;
+  box-shadow: 0 10px 36px rgba(201,168,76,0.35);
+  transform: scale(1.01);
+}
+.form-submit-btn:disabled {
+  background: rgba(75,85,99,0.7);
+  color: rgba(255,255,255,0.5);
+  cursor: not-allowed;
+}
+
 /* ═══════════════════════════════════════════════
    TYPOGRAPHY UTILITIES
 ═══════════════════════════════════════════════ */
@@ -133,14 +175,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;           /* 8px icon–text gap */
-  padding: 0.75rem 1.5rem; /* 12px 24px — spec */
-  min-height: 44px;       /* accessible touch target */
-  border-radius: 0.625rem; /* 10px — uniform across all buttons */
-  font-size: var(--body-sm); /* 14px */
-  font-weight: 500;
+  gap: 0.5rem;
+  padding: 0.8125rem 2.25rem; /* 13px 36px — generous L/R, balanced T/B */
+  min-height: 48px;
+  border-radius: 0.625rem;    /* 10px — matches form inputs */
+  font-size: 0.875rem;        /* 14px */
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: var(--ls-wide);
+  letter-spacing: 0.02em;
   transition: all 0.3s ease;
   outline: none;
   border: none;
@@ -176,8 +218,8 @@
 .card-base {
   background: linear-gradient(145deg, rgba(15, 30, 53, 0.8), rgba(11, 20, 34, 0.9));
   border: 1px solid rgba(201, 168, 76, 0.15);
-  border-radius: 1rem;      /* 16px — consistent radius */
-  padding: 1.25rem 1.5rem;  /* 20px 24px — spec */
+  border-radius: 1rem;     /* 16px */
+  padding: 1.5rem;         /* 24px all sides — uniform, easy to reason about */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: all 0.35s var(--ease-smooth);
@@ -185,8 +227,8 @@
 
 .card-base:hover {
   border-color: rgba(201, 168, 76, 0.4);
-  box-shadow: 0 15px 50px rgba(201, 168, 76, 0.15);
-  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(201, 168, 76, 0.14);
+  transform: translateY(-6px);
 }
 
 /* ═══════════════════════════════════════════════
@@ -245,40 +287,42 @@ h1, h2, h3, h4 {
 /* ═══════════════════════════════════════════════
    SCROLL REVEAL ANIMATIONS
 ═══════════════════════════════════════════════ */
+/* Subtle reveal — shorter travel distances feel polished, not janky */
 .reveal {
   opacity: 0;
-  transform: translateY(45px);
-  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+  transform: translateY(28px);
+  transition: opacity 0.65s var(--ease-smooth), transform 0.65s var(--ease-smooth);
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 .reveal-left {
   opacity: 0;
-  transform: translateX(-55px);
-  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+  transform: translateX(-36px);
+  transition: opacity 0.65s var(--ease-smooth), transform 0.65s var(--ease-smooth);
 }
 .reveal-left.visible { opacity: 1; transform: translateX(0); }
 
 .reveal-right {
   opacity: 0;
-  transform: translateX(55px);
-  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+  transform: translateX(36px);
+  transition: opacity 0.65s var(--ease-smooth), transform 0.65s var(--ease-smooth);
 }
 .reveal-right.visible { opacity: 1; transform: translateX(0); }
 
 .reveal-scale {
   opacity: 0;
-  transform: scale(0.88);
-  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+  transform: scale(0.92);
+  transition: opacity 0.65s var(--ease-smooth), transform 0.65s var(--ease-smooth);
 }
 .reveal-scale.visible { opacity: 1; transform: scale(1); }
 
-.reveal-delay-1 { transition-delay: 0.1s !important; }
-.reveal-delay-2 { transition-delay: 0.2s !important; }
-.reveal-delay-3 { transition-delay: 0.3s !important; }
-.reveal-delay-4 { transition-delay: 0.4s !important; }
-.reveal-delay-5 { transition-delay: 0.5s !important; }
-.reveal-delay-6 { transition-delay: 0.6s !important; }
+/* Tighter stagger — content feels snappy, not laggy */
+.reveal-delay-1 { transition-delay: 0.08s !important; }
+.reveal-delay-2 { transition-delay: 0.16s !important; }
+.reveal-delay-3 { transition-delay: 0.24s !important; }
+.reveal-delay-4 { transition-delay: 0.32s !important; }
+.reveal-delay-5 { transition-delay: 0.40s !important; }
+.reveal-delay-6 { transition-delay: 0.48s !important; }
 
 /* ═══════════════════════════════════════════════
    ISLAMIC GEOMETRIC BACKGROUND PATTERN
@@ -388,6 +432,19 @@ h1, h2, h3, h4 {
 }
 
 /* ═══════════════════════════════════════════════
+   PRAYER CARDS SCROLL CONTAINER
+   Horizontal scroll on small screens so all 5
+   salah are always visible without an awkward
+   2 + 2 + 1 wrapping layout.
+═══════════════════════════════════════════════ */
+.prayer-cards-scroll {
+  /* Smooth momentum scroll on iOS */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+.prayer-cards-scroll::-webkit-scrollbar { display: none; }
+
+/* ═══════════════════════════════════════════════
    PRAYER CARDS
 ═══════════════════════════════════════════════ */
 .prayer-card {
@@ -398,6 +455,7 @@ h1, h2, h3, h4 {
   transition: all 0.4s var(--ease-smooth);
   position: relative;
   overflow: hidden;
+  min-height: 120px; /* equal height across all 5 cards */
 }
 .prayer-card::before {
   content: '';
@@ -424,22 +482,31 @@ h1, h2, h3, h4 {
 ═══════════════════════════════════════════════ */
 .form-input {
   background: rgba(11,20,34,0.65);
-  border: 1px solid rgba(201,168,76,0.22);
-  border-radius: 0.5rem;   /* 8px — consistent with field shape */
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 0.625rem;    /* 10px — matches btn-base radius */
   color: var(--primary-light);
+  font-family: var(--font-raleway, 'Segoe UI'), system-ui, sans-serif;
   font-size: var(--body-sm);  /* 14px */
   line-height: var(--lh-normal);
-  padding: 0.6875rem 1rem; /* ~11px 16px — input height ~44px with border */
-  transition: all 0.3s ease;
+  padding: 0.8125rem 1rem;    /* 13px 16px — touch-target height ~48px */
+  min-height: 48px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   outline: none;
   width: 100%;
+  display: block;
 }
 .form-input:focus {
   border-color: var(--primary-gold);
-  box-shadow: 0 0 0 3px rgba(201,168,76,0.12), 0 0 20px rgba(201,168,76,0.06);
-  background: rgba(11,20,34,0.85);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.14), 0 0 20px rgba(201,168,76,0.06);
+  background: rgba(11,20,34,0.88);
 }
-.form-input::placeholder { color: rgba(245,240,232,0.28); }
+.form-input::placeholder { color: rgba(245,240,232,0.3); }
+
+/* Select: override browser default arrow area */
+select.form-input { cursor: pointer; }
+
+/* Textarea: taller minimum so it looks proportional to the form */
+textarea.form-input { min-height: 130px; resize: none; }
 
 /* ═══════════════════════════════════════════════
    NAVBAR
@@ -607,20 +674,31 @@ h1, h2, h3, h4 {
 }
 
 /* ═══════════════════════════════════════════════
+   OPACITY FILL ALIASES
+   Tailwind v4 uses arbitrary values; provide
+   semantic classes for values used in JSX.
+═══════════════════════════════════════════════ */
+.bg-accent\/8 { background-color: rgba(201, 168, 76, 0.08); }
+
+/* ═══════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════ */
-@media (max-width: 640px) {
+@media (max-width: 639px) {
   body { font-size: 14px; }
   .section-divider { width: 60px; }
 
-  /* Scale card padding down proportionally on mobile */
-  .card-base { padding: 1rem 1.25rem; }
+  /* Card padding slightly reduced on small screens */
+  .card-base { padding: 1.25rem; }
 
-  /* Scale btn down proportionally on mobile */
-  .btn-base { padding: 0.625rem 1.25rem; font-size: 0.8125rem; }
+  /* Buttons — slightly smaller vertical, maintain generous L/R */
+  .btn-base {
+    padding: 0.75rem 1.75rem;
+    font-size: 0.875rem;
+    min-height: 44px;
+  }
 }
 
-@media (min-width: 768px) {
-  /* Slightly larger btn on md+ */
-  .btn-base { padding: 0.8125rem 1.75rem; font-size: var(--body-sm); }
+@media (min-width: 1024px) {
+  /* More breathing room on large desktops */
+  .btn-base { padding: 0.875rem 2.5rem; }
 }
