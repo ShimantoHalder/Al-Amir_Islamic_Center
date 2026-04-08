@@ -2,7 +2,7 @@
 
 export default function Location() {
   return (
-    <section id="location" className="py-16 md:py-28 px-3 sm:px-4 bg-green-950/10 w-full flex flex-col items-center pt-16 md:pt-24">
+    <section id="location" className="py-16 md:py-28 px-3 sm:px-4 bg-green-950/10 w-full flex flex-col items-center">
       <div className="max-w-5xl mx-auto w-full px-2">
         {/* Header */}
         <div className="text-center mb-12 md:mb-14">

@@ -10,7 +10,7 @@ export default function Donate() {
   };
 
   return (
-    <section id="donate" className="py-16 md:py-28 px-3 sm:px-4 w-full flex flex-col items-center pt-16 md:pt-24">
+    <section id="donate" className="py-16 md:py-28 px-3 sm:px-4 w-full flex flex-col items-center">
       <div className="max-w-3xl mx-auto text-center w-full px-2">
         {/* Decorative ring */}
         <div className="relative inline-block mb-10 md:mb-12">
