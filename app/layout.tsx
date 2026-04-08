@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Cinzel, Raleway, Amiri } from 'next/font/google';
+import { AudioControl } from './components/AudioControl';
 import './globals.css';
 
 const cinzel = Cinzel({
@@ -70,7 +71,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${cinzel.variable} ${raleway.variable} ${amiri.variable}`}>
-      <body className="w-full overflow-x-hidden">{children}</body>
+      <body className="w-full overflow-x-hidden">
+        {children}
+        <AudioControl />
+      </body>
     </html>
   );
 }
