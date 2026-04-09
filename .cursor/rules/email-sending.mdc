@@ -1,25 +1,33 @@
 ---
-description: Email sending on Vercel — use Resend HTTP API, never SMTP/Nodemailer
+description: Email sending on Vercel — use Web3Forms HTTP API, never SMTP or Resend
 alwaysApply: true
 ---
 
 # Email Sending
 
-Vercel serverless functions block outbound SMTP (ports 25, 465, 587). Always use Resend (HTTP API).
+Vercel blocks outbound SMTP. Resend free tier only sends to the signup email. Use **Web3Forms**.
 
-## Pattern
+## Pattern (server-side API route)
 
 ```ts
-import { Resend } from 'resend';
-const resend = new Resend(process.env.RESEND_API_KEY);
-await resend.emails.send({ from, to, replyTo, subject, html });
+const res = await fetch('https://api.web3forms.com/submit', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  body: JSON.stringify({
+    access_key: process.env.WEB3FORMS_KEY,
+    subject:    `[Al-Amir] ${subject}`,
+    from_name:  name,
+    email:      email,   // becomes Reply-To
+    message:    message,
+    botcheck:   '',      // honeypot — must be empty string
+  }),
+});
+const data = await res.json();
+if (!data.success) throw new Error('Web3Forms failed');
 ```
 
 ## Config
-- Env var: `RESEND_API_KEY` (set in Vercel dashboard and .env.local)
-- `from`: `'Al-Amir Islamic Center <onboarding@resend.dev>'` until domain `alamiric.org` is verified in Resend
-- `to`: always `['info@alamiric.org']`
-- `replyTo`: visitor's email from the form (so replies go back to them)
-
-## After domain verification
-Change `from` to `'Al-Amir Islamic Center <info@alamiric.org>'`
+- Env var: `WEB3FORMS_KEY` (set in Vercel dashboard and `.env.local`)
+- Get key at: web3forms.com/create — enter `info@alamiric.org`, verify the email, copy the key
+- No domain DNS changes needed — just one-time email verification
+- Delivers directly to `info@alamiric.org`
