@@ -5,9 +5,9 @@ alwaysApply: true
 
 # Email Sending
 
-Vercel serverless functions block outbound SMTP (ports 25, 465, 587). Never use Nodemailer or any SMTP transport.
+Vercel serverless functions block outbound SMTP (ports 25, 465, 587). Always use Resend (HTTP API).
 
-## Always use Resend
+## Pattern
 
 ```ts
 import { Resend } from 'resend';
@@ -15,7 +15,11 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 await resend.emails.send({ from, to, replyTo, subject, html });
 ```
 
-- API key env var: `RESEND_API_KEY`
-- Until domain `alamiric.org` is verified in Resend, use `from: 'Al-Amir Islamic Center <onboarding@resend.dev>'`
-- After domain verification, switch to `from: 'info@alamiric.org'`
-- Delivery address is always `to: ['info@alamiric.org']`
+## Config
+- Env var: `RESEND_API_KEY` (set in Vercel dashboard and .env.local)
+- `from`: `'Al-Amir Islamic Center <onboarding@resend.dev>'` until domain `alamiric.org` is verified in Resend
+- `to`: always `['info@alamiric.org']`
+- `replyTo`: visitor's email from the form (so replies go back to them)
+
+## After domain verification
+Change `from` to `'Al-Amir Islamic Center <info@alamiric.org>'`
