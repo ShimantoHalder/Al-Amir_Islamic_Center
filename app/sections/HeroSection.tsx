@@ -189,7 +189,7 @@ function HeroContent() {
         </div>
         <span className="text-light text-xs sm:text-sm font-light">
           Jumu&apos;ah Khutbah —{' '}
-          <span className="text-accent font-bold">Every Friday at 1:30 PM</span>
+          <span className="text-accent font-bold">Every Friday at 1:15 PM</span>
         </span>
       </div>
     </div>

@@ -89,9 +89,9 @@ function fmt12(raw: string): string {
 const IQAMAH_TIMES: Record<string, string> = {
   Fajr:    '6:15 AM',
   Dhuhr:   '1:30 PM',
-  Asr:     '5:30 PM',
-  Maghrib: '7:30 PM',
-  Isha:    '9:00 PM',
+  Asr:     '5:15 PM',
+  // Maghrib iqamah is set dynamically to the adhan time (prayed immediately)
+  Isha:    '9:10 PM',
 };
 
 // ─── Fallback times (Jacksonville, FL — approximate) ─────────────────────────
@@ -352,16 +352,17 @@ export default function PrayerTimesSection() {
                   {prayer.timeDisplay}
                 </div>
 
-                {/* Iqamah time — shown for all salah except Sunrise */}
-                {!isSunrise && IQAMAH_TIMES[prayer.name] && (
+                {/* Iqamah time — shown for all salah except Sunrise.
+                    Maghrib iqamah equals its adhan time (prayed immediately). */}
+                {!isSunrise && (IQAMAH_TIMES[prayer.name] || prayer.name === 'Maghrib') && (
                   <div className="mt-1.5 sm:mt-2 flex flex-col items-center gap-0.5">
-                    <span className="text-[8px] sm:text-[10px] uppercase tracking-widest text-white-600 leading-none">
+                    <span className="text-[8px] sm:text-[10px] uppercase tracking-widest text-gray-600 leading-none">
                       Iqamah
                     </span>
                     <span className={`text-[9px] sm:text-xs font-mono font-semibold leading-none ${
-                      isActive ? 'text-accent/80' : 'text-white-400'
+                      isActive ? 'text-accent/80' : 'text-gray-400'
                     }`}>
-                      {IQAMAH_TIMES[prayer.name]}
+                      {prayer.name === 'Maghrib' ? prayer.timeDisplay : IQAMAH_TIMES[prayer.name]}
                     </span>
                   </div>
                 )}
@@ -386,16 +387,25 @@ export default function PrayerTimesSection() {
           <span className="text-3xl sm:text-4xl flex-shrink-0">🕋</span>
           <div>
             <div className="text-accent font-bold text-base sm:text-lg md:text-xl tracking-wide">
-              Jumu&apos;ah Prayer
+              Jumu&apos;ah Prayer — Every Friday
             </div>
-            <div className="text-gray-400 text-xs sm:text-sm mt-0.5">
-              Every Friday — Iqamah begins at 2:00 PM
+            <div className="text-white-400 text-xs sm:text-sm mt-0.5">
+              Iqamah begins at <span className="text-white-200 font-semibold">1:30 PM</span>
             </div>
           </div>
         </div>
-        <div className="text-center sm:text-right flex-shrink-0">
-          <div className="text-white font-bold text-2xl sm:text-3xl">1:30 PM</div>
-          <div className="text-accent text-xs tracking-widest uppercase mt-0.5">Khutbah</div>
+        {/* Khutbah time — highlighted */}
+        <div className="flex flex-row sm:flex-col items-center sm:items-end gap-4 sm:gap-1 flex-shrink-0">
+          <div className="text-center sm:text-right">
+            <div className="text-accent font-extrabold text-2xl sm:text-3xl leading-none 0 px-3 py-1">
+              1:15 PM
+            </div>
+            <div className="text-accent text-xs tracking-widest text-bold uppercase mt-1">Khutbah</div>
+          </div>
+          {/* <div className="text-center sm:text-right">
+            <div className="text-white font-bold text-xl sm:text-1xl leading-none">1:30 PM</div>
+            <div className="text-gray-500 text-xs tracking-widest uppercase mt-0.5">Iqamah</div>
+          </div> */}
         </div>
       </div>
     </SectionContainer>

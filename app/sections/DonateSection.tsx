@@ -67,7 +67,7 @@ export default function DonateSection() {
   const { ref, visible } = useScrollReveal();
 
   const handleDonate = () => {
-    window.open(DONATION_FORM_URL, '_blank', 'noopener,noreferrer');
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -127,18 +127,18 @@ export default function DonateSection() {
           Donate Now — For the Sake of Allah
         </button>
 
-        <p className="text-gray-600 text-sm mt-5 sm:mt-6 text-center px-4">
-          Clicking will open our secure donation form in a new tab.
+        <p className="text-light-600 text-sm mt-5 sm:mt-6 text-center px-4">
+          Click to reach our contact form and send us your donation inquiry.
           <br className="hidden sm:block" />
-          <span className="text-accent/60">JazakAllahu Khayran — May Allah accept from you.</span>
+          <span className="text-accent/80">JazakAllahu Khayran — May Allah accept from you.</span>
         </p>
 
         {/* Closing calligraphy */}
         <div className="mt-8 sm:mt-10 pt-7 sm:pt-8 border-t border-accent/10 w-full text-center">
-          <div className="font-arabic text-accent/40 text-2xl sm:text-3xl tracking-wide mb-2 sm:mb-3">
+          <div className="font-arabic text-accent/70 text-2xl sm:text-3xl tracking-wide mb-2 sm:mb-3">
             اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا
           </div>
-          <p className="text-gray-700 text-sm">
+          <p className="text-light-700 text-sm">
             &quot;O Allah, bless for us that which You have provided us.&quot;
           </p>
         </div>

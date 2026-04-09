@@ -91,7 +91,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="#donate"
+            href="#contact"
             className="donate-btn text-black font-bold text-sm lg:text-base px-8 lg:px-10 py-3 lg:py-3.5 rounded-full ml-4 cursor-pointer whitespace-nowrap transition-all duration-300 hover:scale-105"
           >
             Donate
@@ -131,7 +131,7 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="#donate"
+              href="#contact"
               onClick={() => setOpen(false)}
               className="donate-btn text-center text-black font-bold text-base px-8 py-4 rounded-full mt-4 cursor-pointer transition-all duration-300 hover:scale-105"
             >

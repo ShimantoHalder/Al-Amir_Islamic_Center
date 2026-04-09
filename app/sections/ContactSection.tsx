@@ -4,8 +4,6 @@ import { Send, CheckCircle, AlertCircle, Phone, Mail, MapPin, Clock } from 'luci
 import { SectionContainer, SectionHeader } from '@/app/components/ui';
 import { useScrollReveal } from '@/app/hooks';
 
-const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
-
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
 const subjects = [
@@ -45,7 +43,7 @@ const contactDetails = [
     icon: Clock,
     label: "Jumu'ah Prayer",
     value: 'Every Friday',
-    sub: 'Khutbah: 1:30 PM · Iqamah: 2:00 PM',
+    sub: "Khutbah: 1:15 PM · Iqamah: 1:30 PM",
     accent: true,
   },
 ];
@@ -65,19 +63,13 @@ export default function ContactSection() {
     e.preventDefault();
     setStatus('loading');
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: `[Al-Amir] ${form.subject}`,
-          from_name: form.name,
-          email: form.email,
-          message: form.message,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
       });
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         setStatus('success');
         setForm({ name: '', email: '', subject: '', message: '' });
         setTimeout(() => setStatus('idle'), 6000);
@@ -225,11 +217,27 @@ export default function ContactSection() {
                 <AlertCircle size={20} className="text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <div className="text-red-300 font-semibold text-sm">Failed to send</div>
-                  <div className="text-red-500 text-xs mt-1">Please try again or contact us directly.</div>
+                  <div className="text-red-500 text-xs mt-1">Please try again or email us directly at info@alamiric.org</div>
                 </div>
               </div>
             )}
           </form>
+
+          {/* Islamic greeting card — sits directly under the form */}
+          <div className="rounded-xl p-5 border border-accent/15 glass-card text-center mt-4">
+            <div className="font-arabic text-accent text-xl leading-loose mb-2">
+              السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ
+            </div>
+            <p className="text-gray-500 text-xs italic">
+              &quot;Peace be upon you and the mercy of Allah.&quot;
+            </p>
+            <div className="mt-3 pt-3 border-t border-accent/10">
+              <p className="text-gray-400 text-xs leading-relaxed">
+                We respond to all messages within <span className="text-accent font-semibold">24–48 hours</span>,
+                in shaa Allah.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* ── RIGHT: Contact Info Panel ── */}
@@ -276,21 +284,25 @@ export default function ContactSection() {
             );
           })}
 
-          {/* Islamic greeting card */}
-          <div className="rounded-xl p-5 border border-accent/15 glass-card text-center">
-            <div className="font-arabic text-accent text-xl leading-loose mb-2">
-              السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ
+          {/* Facebook card */}
+          <a
+            href="https://www.facebook.com/share/1JDuu2JWEh/?mibextid=wwXIfr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-xl p-5 border border-[#1877F2]/30 glass-card flex items-center gap-4 transition-all duration-300 hover:border-[#1877F2]/60 hover:-translate-y-0.5 group"
+          >
+            <div className="w-10 h-10 rounded-lg bg-[#1877F2]/20 flex items-center justify-center flex-shrink-0 group-hover:bg-[#1877F2]/30 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1877F2" className="w-5 h-5">
+                <path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047v-2.66c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.932-1.956 1.889v2.263h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+              </svg>
             </div>
-            <p className="text-gray-500 text-xs italic">
-              &quot;Peace be upon you and the mercy of Allah.&quot;
-            </p>
-            <div className="mt-3 pt-3 border-t border-accent/10">
-              <p className="text-gray-400 text-xs leading-relaxed">
-                We respond to all messages within <span className="text-accent font-semibold">24–48 hours</span>,
-                in shaa Allah.
-              </p>
+            <div className="flex-1 min-w-0">
+              <div className="text-[#1877F2] text-xs font-bold uppercase tracking-widest mb-1">Facebook</div>
+              <div className="text-gray-200 text-sm leading-relaxed">Follow us on Facebook</div>
+              <div className="text-gray-500 text-xs mt-0.5">Al-Amir Islamic Center</div>
             </div>
-          </div>
+          </a>
+
 
         </div>
       </div>

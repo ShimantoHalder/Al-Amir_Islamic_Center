@@ -1,5 +1,7 @@
 'use client';
 
+const FACEBOOK_URL = 'https://www.facebook.com/share/1JDuu2JWEh/?mibextid=wwXIfr';
+
 const quickLinks = [
   { href: '#home',         label: 'Home' },
   { href: '#prayer-times', label: 'Prayer Times' },
@@ -7,7 +9,7 @@ const quickLinks = [
   { href: '#gallery',      label: 'Gallery' },
   { href: '#location',     label: 'Location' },
   { href: '#contact',      label: 'Contact' },
-  { href: '#donate',       label: 'Donate' },
+  { href: '#contact',      label: 'Donate' },
 ];
 
 const services = [
@@ -63,14 +65,14 @@ export default function FooterSection() {
                   <div className="text-accent text-xs tracking-widest opacity-75">Florida, USA</div>
                 </div>
               </div>
-              <p className="text-gray-500 text-sm leading-relaxed mb-5 max-w-xs">
+              <p className="text-light-500 text-sm leading-relaxed mb-5 max-w-xs">
                 A house of Allah for worship, learning, and community — serving South Florida
                 with sincerity, compassion, and love for the Ummah.
               </p>
-              <div className="font-arabic text-accent/50 text-lg leading-loose">
+              <div className="font-arabic text-accent/80 text-lg leading-loose">
                 رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ
               </div>
-              <p className="text-gray-700 text-xs mt-1.5">
+              <p className="text-light-700 text-xs mt-1.5">
                 &quot;My Lord, make me an establisher of prayer.&quot;
               </p>
             </div>
@@ -82,7 +84,7 @@ export default function FooterSection() {
               </h4>
               <ul className="flex flex-col gap-2.5">
                 {quickLinks.map((link) => (
-                  <li key={link.href} className="flex items-center justify-center sm:justify-start gap-2.5">
+                  <li key={link.label} className="flex items-center justify-center sm:justify-start gap-2.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent/40 flex-shrink-0" />
                     <a
                       href={link.href}
@@ -131,13 +133,13 @@ export default function FooterSection() {
               <div className="mt-5 pt-5 border-t border-blue-900/30 w-full text-center sm:text-left">
                 <div className="text-accent text-xs font-semibold mb-1.5">Friday Prayer</div>
                 <div className="text-gray-500 text-sm">
-                  Khutbah: 1:30 PM<br />
-                  Iqamah: 2:00 PM
+                  <span className="text-accent font-bold">Khutbah: 1:15 PM</span><br />
+                  Iqamah: 1:30 PM
                 </div>
               </div>
 
               <a
-                href="#donate"
+                href="#contact"
                 className="mt-5 flex items-center justify-center gap-2.5 donate-btn text-black font-bold text-sm px-8 py-3 rounded-full w-full sm:w-auto"
               >
                 🤲 Donate
@@ -148,12 +150,32 @@ export default function FooterSection() {
 
           {/* Bottom bar */}
           <div className="border-t border-blue-900/20 pt-6 sm:pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <p className="text-gray-600 text-xs sm:text-sm">
+            <p className="text-light-600 text-xs sm:text-sm">
               © {year} Al-Amir Islamic Center. Built with ❤️ for the Ummah.
             </p>
-            <div className="flex items-center gap-3">
-              <p className="font-arabic text-accent/50 text-lg">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</p>
-              <span className="text-gray-700 text-xs hidden sm:inline">Glory be to Allah</span>
+            <div className="flex items-center gap-4">
+              {/* Facebook link */}
+              <a
+                href={FACEBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow us on Facebook"
+                className="flex items-center gap-2 text-blue-300 hover:text-[#1877F2] transition-colors duration-200 group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047v-2.66c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.932-1.956 1.889v2.263h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+                </svg>
+                <span className="text-xs hidden sm:inline">Facebook</span>
+              </a>
+              <div className="flex items-center gap-3">
+                <p className="font-arabic text-accent/80 text-lg">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</p>
+                <span className="text-light-700 text-xs hidden sm:inline">Glory be to Allah</span>
+              </div>
             </div>
           </div>
 

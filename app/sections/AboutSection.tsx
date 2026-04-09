@@ -22,13 +22,13 @@ const values = [
   {
     icon: '❤️',
     title: 'Charity & Zakat',
-    desc: 'Organizing local food drives, Zakat distribution, and supporting families across South Florida.',
+    desc: 'Organizing local food drives, Zakat distribution, and supporting families across North Florida.',
   },
 ];
 
 const stats = [
   { num: '500+', label: 'Muslim Families' },
-  { num: '15+',  label: 'Years of Service' },
+  { num: '1st',  label: 'Years of Service' },
   { num: '7',    label: 'Days a Week Open' },
   { num: '5',    label: 'Daily Prayers' },
 ];
@@ -113,7 +113,7 @@ export default function AboutSection() {
       <SectionHeader
         icon="☪"
         title={<>About <span className="text-accent">Al-Amir</span></>}
-        description="Al-Amir Islamic Center is a vibrant Muslim community hub in South Florida, dedicated to worship, education, and serving our neighbors with sincerity and compassion."
+        description="Al-Amir Islamic Center is a vibrant Muslim community hub in North Florida, dedicated to worship, education, and serving our neighbors with sincerity and compassion."
       />
 
       {/* Mission + Visual */}
@@ -131,7 +131,7 @@ export default function AboutSection() {
             <p className="text-gray-300 leading-relaxed text-sm sm:text-base mb-5 max-w-prose">
               To establish a house of Allah where every Muslim — new to Islam or born into the
               faith — finds a welcoming space for prayer, learning, and brotherhood. We serve the
-              entire South Florida Muslim community with sincerity and love.
+              entire North Florida Muslim community with sincerity and love.
             </p>
 
             {/* Arabic quote */}
