@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 // Escape HTML entities so user input can never break the email template.
 function esc(str: string): string {
@@ -19,30 +19,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'All fields are required.' }, { status: 400 });
     }
 
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpPort = Number(process.env.SMTP_PORT ?? 465);
-
-    if (!smtpUser || !smtpPass || !smtpHost) {
-      console.error('Contact form: missing SMTP environment variables.');
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error('Contact form: RESEND_API_KEY environment variable is not set.');
       return NextResponse.json({ error: 'Server configuration error.' }, { status: 500 });
     }
 
-    const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: smtpPort,
-      secure: smtpPort === 465,      // true for SSL/465, false for STARTTLS/587
-      auth: { user: smtpUser, pass: smtpPass },
-      tls: { rejectUnauthorized: false },
-      connectionTimeout: 8_000,      // fail fast — Vercel functions time out at 10 s
-      socketTimeout:     8_000,
-    });
+    const resend = new Resend(apiKey);
 
-    await transporter.sendMail({
-      from:    `"Al-Amir Islamic Center" <${smtpUser}>`,
-      to:      smtpUser,             // delivers to info@alamiric.org
-      replyTo: email,                // "Reply" in your mail client goes back to the visitor
+    const { error } = await resend.emails.send({
+      from:    'Al-Amir Islamic Center <onboarding@resend.dev>', // swap to info@alamiric.org after domain verification
+      to:      ['info@alamiric.org'],
+      replyTo: email,
       subject: `[Al-Amir] ${esc(subject)}`,
       html: `
         <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0f1e35;color:#f5f0e8;padding:32px;border-radius:12px;">
@@ -71,9 +59,14 @@ export async function POST(req: NextRequest) {
       `,
     });
 
+    if (error) {
+      console.error('Resend error:', error);
+      return NextResponse.json({ error: 'Failed to send message.' }, { status: 500 });
+    }
+
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error('Contact form SMTP error:', err);
+    console.error('Contact form error:', err);
     return NextResponse.json({ error: 'Failed to send message.' }, { status: 500 });
   }
 }

@@ -1,0 +1,21 @@
+---
+description: Email sending on Vercel — use Resend HTTP API, never SMTP/Nodemailer
+alwaysApply: true
+---
+
+# Email Sending
+
+Vercel serverless functions block outbound SMTP (ports 25, 465, 587). Never use Nodemailer or any SMTP transport.
+
+## Always use Resend
+
+```ts
+import { Resend } from 'resend';
+const resend = new Resend(process.env.RESEND_API_KEY);
+await resend.emails.send({ from, to, replyTo, subject, html });
+```
+
+- API key env var: `RESEND_API_KEY`
+- Until domain `alamiric.org` is verified in Resend, use `from: 'Al-Amir Islamic Center <onboarding@resend.dev>'`
+- After domain verification, switch to `from: 'info@alamiric.org'`
+- Delivery address is always `to: ['info@alamiric.org']`
