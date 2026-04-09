@@ -19,14 +19,14 @@ const contactItems = [
   {
     icon: '📧',
     label: 'Email',
-    value: 'info@alamirislamiccenter.org',
-    href: 'mailto:info@alamirislamiccenter.org',
+    value: 'info@alamiric.org',
+    href: 'mailto:info@alamiric.org',
     highlight: false,
   },
   {
     icon: '🕌',
     label: "Jumu'ah",
-    value: "Every Friday\nKhutbah: 1:30 PM · Iqamah: 2:00 PM",
+    value: "Every Friday\nKhutbah: 1:15 PM · Iqamah: 1:30 PM",
     highlight: true,
   },
   {
