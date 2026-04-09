@@ -3,19 +3,19 @@ import { SectionContainer, SectionHeader } from '@/app/components/ui';
 import { useScrollReveal } from '@/app/hooks';
 
 const contactItems = [
-  {
-    icon: '🏠',
-    label: 'Address',
-    value: 'Al-Amir Islamic Center\n5045 Soutel Dr Unit 38\nJacksonville, FL 32208',
-    highlight: false,
-  },
-  {
-    icon: '📞',
-    label: 'Phone',
-    value: '+1 (305) 000-0000',
-    href: 'tel:+13050000000',
-    highlight: false,
-  },
+  // {
+  //   icon: '🏠',
+  //   label: 'Address',
+  //   value: 'Al-Amir Islamic Center\n5045 Soutel Dr Unit 38\nJacksonville, FL 32208',
+  //   highlight: false,
+  // },
+  // {
+  //   icon: '📞',
+  //   label: 'Phone',
+  //   value: '+1 (305) 000-0000',
+  //   href: 'tel:+13050000000',
+  //   highlight: false,
+  // },
   {
     icon: '📧',
     label: 'Email',
@@ -26,7 +26,7 @@ const contactItems = [
   {
     icon: '🕌',
     label: "Jumu'ah",
-    value: "Every Friday\nKhutbah: 1:00 PM · Iqamah: 1:15 PM",
+    value: "Every Friday\nKhutbah: 1:30 PM · Iqamah: 2:00 PM",
     highlight: true,
   },
   {

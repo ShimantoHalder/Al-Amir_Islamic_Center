@@ -365,12 +365,12 @@ export default function PrayerTimesSection() {
               Jumu&apos;ah Prayer
             </div>
             <div className="text-gray-400 text-xs sm:text-sm mt-0.5">
-              Every Friday — Khutbah begins at 1:00 PM
+              Every Friday — Khutbah begins at 1:30 PM
             </div>
           </div>
         </div>
         <div className="text-center sm:text-right flex-shrink-0">
-          <div className="text-white font-bold text-2xl sm:text-3xl">1:15 PM</div>
+          <div className="text-white font-bold text-2xl sm:text-3xl">2:00 PM</div>
           <div className="text-accent text-xs tracking-widest uppercase mt-0.5">Iqamah</div>
         </div>
       </div>

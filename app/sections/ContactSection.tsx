@@ -37,15 +37,15 @@ const contactDetails = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'info@alamirislamiccenter.org',
-    href: 'mailto:info@alamirislamiccenter.org',
+    value: 'info@alamiric.org',
+    href: 'mailto:info@alamiric.org',
     accent: false,
   },
   {
     icon: Clock,
     label: "Jumu'ah Prayer",
     value: 'Every Friday',
-    sub: 'Khutbah: 1:00 PM · Iqamah: 1:15 PM',
+    sub: 'Khutbah: 1:30 PM · Iqamah: 2:00 PM',
     accent: true,
   },
 ];

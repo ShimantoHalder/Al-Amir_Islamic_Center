@@ -158,7 +158,7 @@ export default function AboutSection() {
           <div className="relative w-56 sm:w-64 md:w-72 h-56 sm:h-64 md:h-72 crescent">
             <IslamicStar />
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <div className="text-xs text-gray-600 mt-16 tracking-widest uppercase text-center">
+              <div className="text-xs text-white-600 mt-16 tracking-widest uppercase text-center">
                 Est. Florida, USA
               </div>
             </div>

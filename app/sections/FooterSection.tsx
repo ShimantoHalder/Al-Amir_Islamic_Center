@@ -119,7 +119,7 @@ export default function FooterSection() {
                 {[
                   { icon: '📍', text: 'Florida, USA' },
                   { icon: '📞', text: '+1 (305) 000-0000' },
-                  { icon: '📧', text: 'info@alamirislamiccenter.org' },
+                  { icon: '📧', text: 'info@alamiric.org' },
                 ].map((item) => (
                   <li key={item.icon} className="flex items-start gap-3 justify-center sm:justify-start">
                     <span className="text-lg flex-shrink-0">{item.icon}</span>
@@ -131,8 +131,8 @@ export default function FooterSection() {
               <div className="mt-5 pt-5 border-t border-blue-900/30 w-full text-center sm:text-left">
                 <div className="text-accent text-xs font-semibold mb-1.5">Friday Prayer</div>
                 <div className="text-gray-500 text-sm">
-                  Khutbah: 1:00 PM<br />
-                  Iqamah: 1:15 PM
+                  Khutbah: 1:30 PM<br />
+                  Iqamah: 2:00 PM
                 </div>
               </div>
 
