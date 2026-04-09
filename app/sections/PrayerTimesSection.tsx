@@ -84,6 +84,16 @@ function fmt12(raw: string): string {
   return `${h}:${m} ${p}`;
 }
 
+// ─── Iqamah times (static — update as the masjid schedule changes) ───────────
+
+const IQAMAH_TIMES: Record<string, string> = {
+  Fajr:    '6:15 AM',
+  Dhuhr:   '1:30 PM',
+  Asr:     '5:30 PM',
+  Maghrib: '7:30 PM',
+  Isha:    '9:00 PM',
+};
+
 // ─── Fallback times (Jacksonville, FL — approximate) ─────────────────────────
 
 const FALLBACK: PrayerTime[] = [
@@ -342,6 +352,20 @@ export default function PrayerTimesSection() {
                   {prayer.timeDisplay}
                 </div>
 
+                {/* Iqamah time — shown for all salah except Sunrise */}
+                {!isSunrise && IQAMAH_TIMES[prayer.name] && (
+                  <div className="mt-1.5 sm:mt-2 flex flex-col items-center gap-0.5">
+                    <span className="text-[8px] sm:text-[10px] uppercase tracking-widest text-white-600 leading-none">
+                      Iqamah
+                    </span>
+                    <span className={`text-[9px] sm:text-xs font-mono font-semibold leading-none ${
+                      isActive ? 'text-accent/80' : 'text-white-400'
+                    }`}>
+                      {IQAMAH_TIMES[prayer.name]}
+                    </span>
+                  </div>
+                )}
+
                 {/* "Now" badge — only for active salah, never Sunrise */}
                 {isActive && (
                   <div className="mt-1.5 sm:mt-2 text-[10px] sm:text-xs text-accent font-semibold animate-pulse flex items-center gap-0.5 sm:gap-1">
@@ -365,13 +389,13 @@ export default function PrayerTimesSection() {
               Jumu&apos;ah Prayer
             </div>
             <div className="text-gray-400 text-xs sm:text-sm mt-0.5">
-              Every Friday — Khutbah begins at 1:30 PM
+              Every Friday — Iqamah begins at 2:00 PM
             </div>
           </div>
         </div>
         <div className="text-center sm:text-right flex-shrink-0">
-          <div className="text-white font-bold text-2xl sm:text-3xl">2:00 PM</div>
-          <div className="text-accent text-xs tracking-widest uppercase mt-0.5">Iqamah</div>
+          <div className="text-white font-bold text-2xl sm:text-3xl">1:30 PM</div>
+          <div className="text-accent text-xs tracking-widest uppercase mt-0.5">Khutbah</div>
         </div>
       </div>
     </SectionContainer>
