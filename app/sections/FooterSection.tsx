@@ -120,7 +120,7 @@ export default function FooterSection() {
               <ul className="space-y-3.5 w-full">
                 {[
                   { icon: '📍', text: 'Florida, USA' },
-                  { icon: '📞', text: '+1 (305) 000-0000' },
+                  { icon: '📞', text: '(324) 222-3299' },
                   { icon: '📧', text: 'info@alamiric.org' },
                 ].map((item) => (
                   <li key={item.icon} className="flex items-start gap-3 justify-center sm:justify-start">

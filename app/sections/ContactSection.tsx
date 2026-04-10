@@ -28,7 +28,7 @@ const contactDetails = [
   {
     icon: Phone,
     label: 'Phone',
-    value: '+1 (305) 000-0000',
+    value: '(324) 222-3299',
     href: 'tel:+13050000000',
     accent: false,
   },
