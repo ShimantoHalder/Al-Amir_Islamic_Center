@@ -63,17 +63,25 @@ export default function ContactSection() {
     e.preventDefault();
     setStatus('loading');
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+          subject:    `[Al-Amir] ${form.subject}`,
+          from_name:  form.name,
+          email:      form.email,
+          message:    form.message,
+          botcheck:   '',
+        }),
       });
       const data = await res.json();
-      if (res.ok && data.success) {
+      if (data.success) {
         setStatus('success');
         setForm({ name: '', email: '', subject: '', message: '' });
         setTimeout(() => setStatus('idle'), 6000);
       } else {
+        console.error('Web3Forms error:', data);
         setStatus('error');
         setTimeout(() => setStatus('idle'), 5000);
       }

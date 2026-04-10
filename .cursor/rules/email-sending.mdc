@@ -1,33 +1,33 @@
 ---
-description: Email sending on Vercel — use Web3Forms HTTP API, never SMTP or Resend
+description: Contact form email — uses Web3Forms client-side submission
 alwaysApply: true
 ---
 
-# Email Sending
+# Contact Form Email
 
-Vercel blocks outbound SMTP. Resend free tier only sends to the signup email. Use **Web3Forms**.
+Submit directly from the client to Web3Forms (no server API route needed).
 
-## Pattern (server-side API route)
+## Pattern
 
-```ts
+```tsx
 const res = await fetch('https://api.web3forms.com/submit', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
   body: JSON.stringify({
-    access_key: process.env.WEB3FORMS_KEY,
-    subject:    `[Al-Amir] ${subject}`,
-    from_name:  name,
-    email:      email,   // becomes Reply-To
-    message:    message,
-    botcheck:   '',      // honeypot — must be empty string
+    access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+    subject:    `[Al-Amir] ${form.subject}`,
+    from_name:  form.name,
+    email:      form.email,   // becomes Reply-To
+    message:    form.message,
+    botcheck:   '',           // honeypot — must be empty string
   }),
 });
 const data = await res.json();
-if (!data.success) throw new Error('Web3Forms failed');
+if (data.success) { /* success */ }
 ```
 
 ## Config
-- Env var: `WEB3FORMS_KEY` (set in Vercel dashboard and `.env.local`)
-- Get key at: web3forms.com/create — enter `info@alamiric.org`, verify the email, copy the key
-- No domain DNS changes needed — just one-time email verification
-- Delivers directly to `info@alamiric.org`
+- Env var: `NEXT_PUBLIC_WEB3FORMS_KEY` (client-side — NEXT_PUBLIC_ prefix required)
+- Set in Vercel: Settings → Environment Variables → `NEXT_PUBLIC_WEB3FORMS_KEY`
+- Get key: web3forms.com/create → enter `info@alamiric.org` → verify email → copy key
+- No server route, no SMTP, no domain DNS changes needed
